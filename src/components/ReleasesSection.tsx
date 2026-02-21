@@ -26,15 +26,19 @@ const releases = [
     }
 ];
 
-export const ReleasesSection = () => {
+interface ReleasesSectionProps {
+    isActive?: boolean;
+}
+
+export const ReleasesSection = ({ isActive = false }: ReleasesSectionProps) => {
     return (
-        <Section id="releases" className="bg-zinc-950 py-32">
+        <Section id="releases" className="bg-zinc-950 h-screen flex items-center overflow-hidden">
             <div className="container mx-auto px-6">
                 <motion.h2
                     className="text-4xl md:text-6xl font-bold text-white mb-16 tracking-tighter"
                     initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
+                    animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 30 }}
+                    transition={{ duration: 0.6, delay: 0.2 }}
                 >
                     DISCOGRAFÍA
                 </motion.h2>
@@ -44,9 +48,8 @@ export const ReleasesSection = () => {
                         <motion.div
                             key={index}
                             initial={{ opacity: 0, scale: 0.9 }}
-                            whileInView={{ opacity: 1, scale: 1 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: index * 0.1 }}
+                            animate={{ opacity: isActive ? 1 : 0, scale: isActive ? 1 : 0.9 }}
+                            transition={{ delay: 0.3 + (index * 0.1), duration: 0.6 }}
                             className="group relative aspect-square bg-zinc-900 overflow-hidden cursor-pointer"
                         >
                             <div className="absolute inset-0 bg-zinc-800 group-hover:bg-zinc-700 transition-colors duration-500" />

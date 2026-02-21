@@ -1,4 +1,4 @@
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Section } from './Section';
 import { Play } from 'lucide-react';
 import { useRef } from 'react';
@@ -8,9 +8,10 @@ interface MaskedRevealLineProps {
     text: string;
     delay?: number;
     className?: string;
+    animate?: any;
 }
 
-const MaskedRevealLine = ({ text, delay = 0, className }: MaskedRevealLineProps) => {
+const MaskedRevealLine = ({ text, delay = 0, className, animate = "visible" }: MaskedRevealLineProps) => {
     // Character Variants
     const charVariants = {
         hidden: { y: "110%", opacity: 0 },
@@ -19,7 +20,7 @@ const MaskedRevealLine = ({ text, delay = 0, className }: MaskedRevealLineProps)
             opacity: 1,
             transition: {
                 duration: 1.0,
-                ease: [0.22, 1, 0.36, 1],
+                ease: [0.22, 1, 0.36, 1] as any,
                 delay: delay + (i * 0.05), // Stagger per character
             },
         }),
@@ -31,30 +32,33 @@ const MaskedRevealLine = ({ text, delay = 0, className }: MaskedRevealLineProps)
             <span className="sr-only">{text}</span>
 
             {/* Split characters */}
-            {text.split('').map((char, index) => (
-                <motion.span
-                    key={`${char}-${index}`}
-                    className={`inline-block whitespace-pre ${className}`}
-                    custom={index}
-                    variants={charVariants}
-                    initial="hidden"
-                    animate="visible"
-                >
-                    {char}
-                </motion.span>
-            ))}
+            <motion.div
+                variants={{}} // Empty variants for the container to pass down animate state
+                animate={animate}
+                className="flex"
+            >
+                {text.split('').map((char, index) => (
+                    <motion.span
+                        key={`${char}-${index}`}
+                        className={`inline-block whitespace-pre ${className}`}
+                        custom={index}
+                        variants={charVariants}
+                    >
+                        {char}
+                    </motion.span>
+                ))}
+            </motion.div>
         </span>
     );
 };
 
 
-export const HeroSection = () => {
-    const containerRef = useRef<HTMLDivElement>(null);
-    const { scrollY } = useScroll();
+interface HeroSectionProps {
+    isActive?: boolean;
+}
 
-    // Parallax & Scroll Effects
-    const backgroundY = useTransform(scrollY, [0, 1000], [0, 100]);
-    const metadataOpacity = useTransform(scrollY, [0, 200], [1, 0]);
+export const HeroSection = ({ isActive = true }: HeroSectionProps) => {
+    const containerRef = useRef<HTMLDivElement>(null);
 
     // Precise Cinematic Easing
     const revealEase = [0.22, 1, 0.36, 1] as const;
@@ -67,19 +71,18 @@ export const HeroSection = () => {
                 {/* Curtain Reveal Wrapper */}
                 <motion.div
                     className="w-full h-full relative"
-                    initial={{ y: "100%" }} // Start completely pushed down
-                    animate={{ y: "0%" }}   // Reveal up like a curtain
+                    initial={{ y: "100%" }}
+                    animate={{ y: isActive ? "0%" : "100%" }}
                     transition={{
-                        duration: 1.2,
+                        duration: 1.5,
                         ease: [0.22, 1, 0.36, 1],
-                        delay: 0.1 // Slight sync with text
+                        delay: 0.3
                     }}
                 >
                     <div className="absolute inset-0 bg-black/40 z-10" />
 
                     <motion.div
                         className="w-full h-full will-change-transform"
-                        style={{ y: backgroundY }}
                     >
                         <motion.img
                             src="/assets/DSC04120 - Nicolas Cordoba.png"
@@ -88,9 +91,16 @@ export const HeroSection = () => {
                             loading="eager"
                             // @ts-ignore
                             fetchpriority="high"
-                            initial={{ scale: 1 }}
-                            animate={{ scale: 1.04 }}
-                            transition={{ duration: 7, ease: "easeOut" }}
+                            initial={{ scale: 1.1, filter: "blur(10px)" }}
+                            animate={{
+                                scale: isActive ? 1 : 1.1,
+                                filter: isActive ? "blur(0px)" : "blur(10px)"
+                            }}
+                            transition={{
+                                duration: 2.5,
+                                ease: [0.22, 1, 0.36, 1],
+                                delay: 0.2
+                            }}
                         />
                     </motion.div>
                 </motion.div>
@@ -108,8 +118,8 @@ export const HeroSection = () => {
                     <div className="flex items-center justify-center" aria-hidden="true">
                         <MaskedRevealLine
                             text="CLARK"
-                            delay={0.2} // Sync: Starts slightly after background starts moving
-                            // Reduced font size: 15vw -> 12vw
+                            delay={0.6}
+                            animate={isActive ? "visible" : "hidden"}
                             className="text-[12vw] leading-[0.8] font-black tracking-tighter uppercase select-none will-change-transform"
                         />
                     </div>
@@ -118,8 +128,8 @@ export const HeroSection = () => {
                     <div className="my-2 md:my-4 flex items-center justify-center" aria-hidden="true">
                         <MaskedRevealLine
                             text="&"
-                            delay={0.5}
-                            // Reduced font size: 5vw -> 4vw
+                            delay={0.9}
+                            animate={isActive ? "visible" : "hidden"}
                             className="text-[4vw] leading-[0.8] font-light italic text-white/90 tracking-tight uppercase select-none will-change-transform"
                         />
                     </div>
@@ -128,8 +138,8 @@ export const HeroSection = () => {
                     <div className="flex items-center justify-center" aria-hidden="true">
                         <MaskedRevealLine
                             text="TIGRE VERDE"
-                            delay={0.7}
-                            // Reduced font size: 15vw -> 12vw
+                            delay={1.1}
+                            animate={isActive ? "visible" : "hidden"}
                             className="text-[12vw] leading-[0.8] font-black tracking-tighter uppercase select-none will-change-transform"
                         />
                     </div>
@@ -141,8 +151,8 @@ export const HeroSection = () => {
             <motion.div
                 className="absolute bottom-8 left-6 md:bottom-12 md:left-12 z-30 flex items-center gap-4 group cursor-pointer"
                 initial={{ opacity: 0, scale: 0.94 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 1.2, duration: 0.8, ease: revealEase }}
+                animate={{ opacity: isActive ? 1 : 0, scale: isActive ? 1 : 0.94 }}
+                transition={{ delay: 1.6, duration: 0.8, ease: revealEase }}
                 whileHover={{ scale: 1.06 }}
             >
                 <div className="w-10 h-10 md:w-14 md:h-14 rounded-full border border-white/40 flex items-center justify-center group-hover:bg-white/10 group-hover:backdrop-blur-md transition-all duration-300">
@@ -151,8 +161,8 @@ export const HeroSection = () => {
                 <motion.div
                     className="flex flex-col text-left"
                     initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 1.3, duration: 0.8, ease: revealEase }}
+                    animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 10 }}
+                    transition={{ delay: 1.7, duration: 0.8, ease: revealEase }}
                 >
                     <span className="text-[9px] md:text-[10px] font-bold text-white uppercase tracking-[0.2em] mb-0.5">Play</span>
                     <span className="text-[9px] text-white/60 uppercase tracking-widest leading-none">The Experience</span>
@@ -162,14 +172,16 @@ export const HeroSection = () => {
             {/* Bottom Right - Info */}
             <motion.div
                 className="absolute bottom-10 right-8 md:bottom-16 md:right-16 z-30 text-right hidden md:block"
-                style={{ opacity: metadataOpacity }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: isActive ? 1 : 0 }}
+                transition={{ duration: 0.8, delay: 1.8 }}
             >
                 <div className="flex gap-16 text-[10px] font-medium tracking-[0.2em] text-white/80 uppercase">
                     <motion.div
                         className="flex flex-col gap-1 items-end"
                         initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 1.4, duration: 0.8, ease: revealEase }}
+                        animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 20 }}
+                        transition={{ delay: 1.9, duration: 0.8, ease: revealEase }}
                     >
                         <span className="text-white">Creator</span>
                         <span className="text-white/50">Curator</span>
@@ -177,8 +189,8 @@ export const HeroSection = () => {
                     <motion.div
                         className="flex flex-col gap-1 items-end"
                         initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 1.5, duration: 0.8, ease: revealEase }}
+                        animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 20 }}
+                        transition={{ delay: 2.0, duration: 0.8, ease: revealEase }}
                     >
                         <span className="text-white">Buenos Aires</span>
                         <span className="text-white/50">Argentina</span>

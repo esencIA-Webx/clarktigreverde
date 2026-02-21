@@ -2,9 +2,13 @@ import { motion } from 'framer-motion';
 import { Section } from './Section';
 import { VideoBackground } from './VideoBackground';
 
-export const FinalCTA = () => {
+interface FinalCTAProps {
+    isActive?: boolean;
+}
+
+export const FinalCTA = ({ isActive = false }: FinalCTAProps) => {
     return (
-        <Section id="listen" className="flex items-center justify-center text-center">
+        <Section id="listen" className="flex items-center justify-center text-center h-screen overflow-hidden">
             <VideoBackground
                 src="/assets/outro-loop.mp4"
                 className="opacity-40"
@@ -14,8 +18,8 @@ export const FinalCTA = () => {
                 <motion.h2
                     className="text-5xl md:text-8xl font-bold text-white mb-12 tracking-tighter"
                     initial={{ opacity: 0, scale: 0.9 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    viewport={{ once: true }}
+                    animate={{ opacity: isActive ? 1 : 0, scale: isActive ? 1 : 0.9 }}
+                    transition={{ duration: 0.6, delay: 0.2 }}
                 >
                     SIENTE EL <span className="text-accent">IMPACTO</span>
                 </motion.h2>

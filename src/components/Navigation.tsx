@@ -4,13 +4,18 @@ import { X, ArrowRight } from 'lucide-react';
 import { OpticLensImage } from './OpticLensImage';
 
 const navItems = [
-    { name: 'Experiencia', href: '#experience' },
-    { name: 'Concepto', href: '#concept' },
-    { name: 'Diferencial', href: '#differential' },
-    { name: 'Releases', href: '#releases' },
+    { name: 'Experiencia', id: 'experience' },
+    { name: 'Concepto', id: 'concept' },
+    { name: 'Diferencial', id: 'differential' },
+    { name: 'Releases', id: 'releases' },
 ];
 
-export const Navigation = () => {
+interface NavigationProps {
+    activeSection: string;
+    onSectionChange: (id: string) => void;
+}
+
+export const Navigation = ({ activeSection, onSectionChange }: NavigationProps) => {
     const [isOpen, setIsOpen] = useState(false);
 
     // Precise Cinematic Easing (Matches Hero)
@@ -26,7 +31,14 @@ export const Navigation = () => {
                     transition={{ duration: 0.5, delay: 0.15 }}
                     className="pointer-events-auto mix-blend-difference"
                 >
-                    <a href="#" className="block group">
+                    <a
+                        href="#hero"
+                        className="block group"
+                        onClick={(e) => {
+                            e.preventDefault();
+                            onSectionChange('hero');
+                        }}
+                    >
                         {/* Abstract Logo */}
                         <motion.div
                             className="w-10 h-10 bg-white rounded-sm flex items-center justify-center"
@@ -61,7 +73,7 @@ export const Navigation = () => {
                         className="fixed inset-0 z-[100] flex text-white overflow-hidden"
                         initial={{ y: "100%" }}
                         animate={{ y: "0%" }}
-                        exit={{ y: "100%" }}
+                        exit={{ y: "-100%" }}
                         transition={{
                             duration: 1.0,
                             ease: revealEase,
@@ -106,9 +118,14 @@ export const Navigation = () => {
                                     {navItems.map((item, i) => (
                                         <div key={item.name} className="overflow-hidden">
                                             <motion.a
-                                                href={item.href}
-                                                onClick={() => setIsOpen(false)}
-                                                className="block text-5xl md:text-7xl font-black text-white hover:text-white/50 transition-colors tracking-tighter uppercase leading-none"
+                                                href={`#${item.id}`}
+                                                onClick={(e) => {
+                                                    e.preventDefault();
+                                                    onSectionChange(item.id);
+                                                    setIsOpen(false);
+                                                }}
+                                                className={`block text-5xl md:text-7xl font-black tracking-tighter uppercase leading-none transition-colors ${activeSection === item.id ? 'text-accent' : 'text-white hover:text-white/50'
+                                                    }`}
                                                 initial={{ y: "100%" }}
                                                 animate={{ y: "0%" }}
                                                 transition={{

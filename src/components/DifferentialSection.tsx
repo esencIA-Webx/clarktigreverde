@@ -20,18 +20,21 @@ const differentials = [
     }
 ];
 
-export const DifferentialSection = () => {
+interface DifferentialSectionProps {
+    isActive?: boolean;
+}
+
+export const DifferentialSection = ({ isActive = false }: DifferentialSectionProps) => {
     return (
-        <Section id="differential" className="bg-black py-20 flex items-center">
+        <Section id="differential" className="bg-black h-screen flex items-center overflow-hidden">
             <div className="container mx-auto px-6">
                 <div className="grid md:grid-cols-3 gap-8">
                     {differentials.map((item, index) => (
                         <motion.div
                             key={index}
                             initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: index * 0.2, duration: 0.6 }}
+                            animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 20 }}
+                            transition={{ delay: 0.2 + (index * 0.1), duration: 0.6 }}
                             className="group p-8 border border-white/10 hover:border-accent/50 transition-colors bg-white/5 backdrop-blur-sm"
                         >
                             <item.icon className="w-10 h-10 text-accent mb-6 opacity-80 group-hover:opacity-100 transition-opacity" />

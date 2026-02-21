@@ -1,15 +1,18 @@
 import { motion } from 'framer-motion';
 import { Section } from './Section';
 
-export const ConceptSection = () => {
+interface ConceptSectionProps {
+    isActive?: boolean;
+}
+
+export const ConceptSection = ({ isActive = false }: ConceptSectionProps) => {
     return (
-        <Section id="concept" className="bg-zinc-900 flex items-center justify-center py-20">
+        <Section id="concept" className="bg-zinc-900 flex items-center justify-center h-screen overflow-hidden">
             <div className="container mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
                 <motion.div
                     initial={{ opacity: 0, x: -50 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.8 }}
+                    animate={{ opacity: isActive ? 1 : 0, x: isActive ? 0 : -50 }}
+                    transition={{ duration: 0.8, delay: 0.2 }}
                 >
                     <div className="aspect-square bg-zinc-800 rounded-lg overflow-hidden relative">
                         {/* Placeholder for "Planos sincronizados de ejecución instrumental" */}
@@ -26,9 +29,8 @@ export const ConceptSection = () => {
 
                 <motion.div
                     initial={{ opacity: 0, x: 50 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.8, delay: 0.2 }}
+                    animate={{ opacity: isActive ? 1 : 0, x: isActive ? 0 : 50 }}
+                    transition={{ duration: 0.8, delay: 0.4 }}
                     className="space-y-6"
                 >
                     <h3 className="text-3xl md:text-5xl font-bold tracking-tighter text-white">
