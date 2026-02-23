@@ -40,7 +40,7 @@ export const ReleasesSection = ({ isActive = false }: ReleasesSectionProps) => {
                     animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 30 }}
                     transition={{ duration: 0.6, delay: 0.2 }}
                 >
-                    DISCOGRAFÍA
+                    MÚSICA
                 </motion.h2>
 
                 <div className="grid md:grid-cols-3 gap-8">

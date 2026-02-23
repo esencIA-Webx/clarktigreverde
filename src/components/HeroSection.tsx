@@ -33,6 +33,7 @@ const MaskedRevealLine = ({ text, delay = 0, className, animate = "visible" }: M
 
             {/* Split characters */}
             <motion.div
+                initial="hidden"
                 variants={{}} // Empty variants for the container to pass down animate state
                 animate={animate}
                 className="flex"
