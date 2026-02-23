@@ -39,14 +39,14 @@ export const Navigation = ({ activeSection, onSectionChange }: NavigationProps) 
                             onSectionChange('hero');
                         }}
                     >
-                        {/* Abstract Logo */}
-                        <motion.div
-                            className="w-10 h-10 bg-white rounded-sm flex items-center justify-center"
+                        {/* New Logo */}
+                        <motion.img
+                            src="/logo.png"
+                            alt="Clark Tigre Logo"
+                            className="w-12 h-12 aspect-square object-contain bg-white rounded-lg p-1"
                             whileHover={{ scale: 1.05 }}
                             transition={{ duration: 0.2 }}
-                        >
-                            <div className="w-4 h-4 bg-black rounded-full" />
-                        </motion.div>
+                        />
                     </a>
                 </motion.div>
 
