@@ -5,9 +5,10 @@ interface OpticLensImageProps {
     src: string;
     alt: string;
     className?: string; // For outer container sizing
+    intensity?: number; // 0 to 1, default 1
 }
 
-export const OpticLensImage = ({ src, alt, className = "" }: OpticLensImageProps) => {
+export const OpticLensImage = ({ src, alt, className = "", intensity = 1 }: OpticLensImageProps) => {
     const containerRef = useRef<HTMLDivElement>(null);
 
     // Target Values (Where we want to go)
@@ -23,9 +24,8 @@ export const OpticLensImage = ({ src, alt, className = "" }: OpticLensImageProps
     const y = useMotionValue(0);
 
     // Constants
-    // Constants
     const LERP_FACTOR = 0.08;
-    const MAX_DISPLACEMENT = 10; // Reduced for less frenetic movement
+    const MAX_DISPLACEMENT = 10 * intensity; // Scaled by intensity
 
     useEffect(() => {
         let animationFrameId: number;
@@ -81,20 +81,21 @@ export const OpticLensImage = ({ src, alt, className = "" }: OpticLensImageProps
                     const isBase = i === 0;
 
                     // Scale: 
-                    // Base: 1.05 (Slight zoom to cover edges). 
-                    // Echoes: Smaller (1.0 -> 0.9 -> 0.8)
-                    const scale = isBase ? 1.05 : 1.0 - (i * 0.05);
+                    // Base: Slight zoom to cover edges. 
+                    // Echoes: Smaller, scaled by intensity
+                    const baseScale = 1.05;
+                    const echoScaleStep = 0.05 * intensity;
+                    const scale = isBase ? baseScale : 1.0 - (i * echoScaleStep);
 
                     // Opacity: 
-                    // Base: 1 (Fully visible).
-                    // Echoes: Transparent (0.3 - 0.5) to see background clearly.
-                    const opacity = isBase ? 0.6 : 0.3; // Base slightly dimmed for vibe? Or full 1? User said "visualizar imagen de fondo con claridad".
-                    // Let's try Base 0.8, Echoes 0.4.
+                    // Echoes: Transparent, slightly lower when intensity is low
+                    const baseOpacity = 0.8;
+                    const echoOpacity = 0.25 * intensity + 0.05;
 
                     // Movement:
                     // Base: 0 (Static).
-                    // Echoes: Move increasingly (0.5 -> 1.0 -> 1.5).
-                    const moveFactor = isBase ? 0 : 0.5 + (i * 0.25);
+                    // Echoes: Move increasingly, scaled by intensity
+                    const moveFactor = isBase ? 0 : (0.5 + (i * 0.25)) * intensity;
 
                     const layerX = useTransform(x, (val) => val * moveFactor);
                     const layerY = useTransform(y, (val) => val * moveFactor);
@@ -105,12 +106,12 @@ export const OpticLensImage = ({ src, alt, className = "" }: OpticLensImageProps
                             className="absolute inset-0 flex items-center justify-center pointer-events-none"
                             style={{
                                 zIndex: i, // Base at 0 (Bottom), Echoes on top (1, 2, 3...)
-                                mixBlendMode: isBase ? 'normal' : 'screen', // Screen for "light echoes"? Or Normal? Let's stick to Normal with Opacity for clarity.
+                                mixBlendMode: isBase ? 'normal' : 'screen',
                             }}
                         >
                             <motion.img
                                 src={src}
-                                alt=""
+                                alt={alt}
                                 className="w-full h-full object-cover"
                                 style={{
                                     width: '100%',
@@ -118,8 +119,8 @@ export const OpticLensImage = ({ src, alt, className = "" }: OpticLensImageProps
                                     scale: scale,
                                     x: layerX,
                                     y: layerY,
-                                    opacity: isBase ? 0.8 : 0.25, // Base clear, Echoes faint ghost
-                                    filter: isBase ? 'none' : `brightness(${1 + i * 0.1}) blur(${i * 0.5}px)`, // Echoes blurred/bright
+                                    opacity: isBase ? baseOpacity : echoOpacity,
+                                    filter: isBase ? 'none' : `brightness(${1 + i * 0.1}) blur(${i * 0.5 * intensity}px)`,
                                 }}
                             />
                         </motion.div>

@@ -4,10 +4,10 @@ import { X, ArrowRight } from 'lucide-react';
 import { OpticLensImage } from './OpticLensImage';
 
 const navItems = [
-    { name: 'Experiencia', id: 'experience' },
-    { name: 'Concepto', id: 'concept' },
-    { name: 'Diferencial', id: 'differential' },
-    { name: 'Releases', id: 'releases' },
+    { name: 'HOME', id: 'hero' },
+    { name: 'EXPERIENCIA', id: 'experience' },
+    { name: 'SHOWS', id: 'differential' },
+    { name: 'MÚSICA', id: 'releases' },
 ];
 
 interface NavigationProps {
