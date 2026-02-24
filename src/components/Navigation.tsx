@@ -58,10 +58,10 @@ export const Navigation = ({ activeSection, onSectionChange }: NavigationProps) 
                     transition={{ duration: 0.5, delay: 0.25 }}
                     className="pointer-events-auto flex flex-col items-end group gap-1 mix-blend-difference"
                 >
-                    <span className="text-[10px] uppercase tracking-widest text-white/70 group-hover:text-white transition-colors font-medium">Menu</span>
+                    <span className="text-[10px] uppercase tracking-widest text-white/70 group-hover:text-accent transition-colors font-medium">Menu</span>
                     <div className="space-y-1.5 local-menu-hover">
-                        <span className="block w-8 h-[2px] bg-white group-hover:w-6 transition-all duration-300 ml-auto" />
-                        <span className="block w-5 h-[2px] bg-white group-hover:w-8 transition-all duration-300 ml-auto" />
+                        <span className="block w-8 h-[2px] bg-white group-hover:bg-accent group-hover:w-6 transition-all duration-300 ml-auto" />
+                        <span className="block w-5 h-[2px] bg-white group-hover:bg-accent group-hover:w-8 transition-all duration-300 ml-auto" />
                     </div>
                 </motion.button>
             </nav>

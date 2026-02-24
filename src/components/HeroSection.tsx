@@ -56,9 +56,10 @@ const MaskedRevealLine = ({ text, delay = 0, className, animate = "visible" }: M
 
 interface HeroSectionProps {
     isActive?: boolean;
+    onPlay?: () => void;
 }
 
-export const HeroSection = ({ isActive = true }: HeroSectionProps) => {
+export const HeroSection = ({ isActive = true, onPlay }: HeroSectionProps) => {
     const containerRef = useRef<HTMLDivElement>(null);
 
     // Precise Cinematic Easing
@@ -136,12 +137,18 @@ export const HeroSection = ({ isActive = true }: HeroSectionProps) => {
                     </div>
 
                     {/* Line 3: TIGRE VERDE */}
-                    <div className="flex items-center justify-center" aria-hidden="true">
+                    <div className="flex items-center justify-center gap-[7.2em]" aria-hidden="true">
                         <MaskedRevealLine
-                            text="TIGRE VERDE"
+                            text="TIGRE"
                             delay={1.1}
                             animate={isActive ? "visible" : "hidden"}
                             className="text-[12vw] leading-[0.8] font-black tracking-tighter uppercase select-none will-change-transform"
+                        />
+                        <MaskedRevealLine
+                            text="VERDE"
+                            delay={1.4} // Staggered after TIGRE
+                            animate={isActive ? "visible" : "hidden"}
+                            className="text-[12vw] leading-[0.8] font-black tracking-tighter uppercase text-accent select-none will-change-transform"
                         />
                     </div>
 
@@ -150,51 +157,70 @@ export const HeroSection = ({ isActive = true }: HeroSectionProps) => {
 
             {/* Bottom Left - Play CTA */}
             <motion.div
-                className="absolute bottom-8 left-6 md:bottom-12 md:left-12 z-30 flex items-center gap-4 group cursor-pointer"
+                className="absolute bottom-10 left-8 md:bottom-16 md:left-16 z-30 flex items-center gap-6 group cursor-pointer"
                 initial={{ opacity: 0, scale: 0.94 }}
                 animate={{ opacity: isActive ? 1 : 0, scale: isActive ? 1 : 0.94 }}
                 transition={{ delay: 1.6, duration: 0.8, ease: revealEase }}
-                whileHover={{ scale: 1.06 }}
+                whileHover={{ scale: 1.05 }}
+                onClick={onPlay}
             >
-                <div className="w-10 h-10 md:w-14 md:h-14 rounded-full border border-white/40 flex items-center justify-center group-hover:bg-white/10 group-hover:backdrop-blur-md transition-all duration-300">
-                    <Play className="w-3 h-3 md:w-4 md:h-4 text-white fill-white transition-colors ml-0.5" />
+                <div className="w-16 h-16 md:w-20 md:h-20 rounded-full border border-white/20 flex items-center justify-center group-hover:bg-accent/10 group-hover:border-accent group-hover:backdrop-blur-sm transition-all duration-300">
+                    <Play className="w-5 h-5 md:w-6 md:h-6 text-white group-hover:text-accent group-hover:fill-accent transition-colors ml-1" />
                 </div>
                 <motion.div
                     className="flex flex-col text-left"
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 10 }}
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: isActive ? 1 : 0, x: isActive ? 0 : -10 }}
                     transition={{ delay: 1.7, duration: 0.8, ease: revealEase }}
                 >
-                    <span className="text-[9px] md:text-[10px] font-bold text-white uppercase tracking-[0.2em] mb-0.5">Play</span>
-                    <span className="text-[9px] text-white/60 uppercase tracking-widest leading-none">The Experience</span>
+                    <span className="text-xs md:text-sm font-bold text-white uppercase tracking-[0.3em] mb-1 group-hover:text-accent transition-colors">Play</span>
+                    <span className="text-[10px] md:text-xs text-white/40 uppercase tracking-[0.2em] leading-none group-hover:text-white transition-colors">VIVÍ LA EXPERIENCIA</span>
                 </motion.div>
             </motion.div>
 
-            {/* Bottom Right - Info */}
+            {/* Bottom Info - Links & Location */}
             <motion.div
-                className="absolute bottom-10 right-8 md:bottom-16 md:right-16 z-30 text-right hidden md:block"
+                className="absolute bottom-10 left-1/2 -translate-x-1/2 md:translate-x-0 md:left-auto md:right-16 md:bottom-16 z-30 w-full md:w-auto px-8 md:px-0"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: isActive ? 1 : 0 }}
                 transition={{ duration: 0.8, delay: 1.8 }}
             >
-                <div className="flex gap-16 text-[10px] font-medium tracking-[0.2em] text-white/80 uppercase">
+                <div className="flex flex-col md:flex-row items-center md:items-end justify-center md:justify-end gap-12 md:gap-24 text-[10px] md:text-sm font-medium tracking-[0.2em] uppercase pointer-events-auto">
+                    {/* Social links - Moved more to the middle-ish */}
+                    <div className="flex flex-col gap-3 items-center md:items-end">
+                        <motion.a
+                            href="https://www.instagram.com/clarrk__/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-white hover:text-accent transition-colors"
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 20 }}
+                            transition={{ delay: 1.9, duration: 0.8, ease: revealEase }}
+                        >
+                            clarrk__
+                        </motion.a>
+                        <motion.a
+                            href="https://www.instagram.com/tigreverde__/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-white hover:text-accent transition-colors"
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 20 }}
+                            transition={{ delay: 2.0, duration: 0.8, ease: revealEase }}
+                        >
+                            tigreverde__
+                        </motion.a>
+                    </div>
+
+                    {/* Location - Original spot */}
                     <motion.div
-                        className="flex flex-col gap-1 items-end"
+                        className="flex flex-col gap-1 items-center md:items-end text-white/50"
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 20 }}
-                        transition={{ delay: 1.9, duration: 0.8, ease: revealEase }}
-                    >
-                        <span className="text-white">Creator</span>
-                        <span className="text-white/50">Curator</span>
-                    </motion.div>
-                    <motion.div
-                        className="flex flex-col gap-1 items-end"
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 20 }}
-                        transition={{ delay: 2.0, duration: 0.8, ease: revealEase }}
+                        transition={{ delay: 2.1, duration: 0.8, ease: revealEase }}
                     >
                         <span className="text-white">Buenos Aires</span>
-                        <span className="text-white/50">Argentina</span>
+                        <span>Argentina</span>
                     </motion.div>
                 </div>
             </motion.div>
