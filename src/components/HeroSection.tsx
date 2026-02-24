@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { Section } from './Section';
 import { Play } from 'lucide-react';
-import { useRef } from 'react';
+import { useRef, useState, useEffect } from 'react';
 
 // Helper component for Masked Character Reveal
 interface MaskedRevealLineProps {
@@ -61,6 +61,14 @@ interface HeroSectionProps {
 
 export const HeroSection = ({ isActive = true, onPlay }: HeroSectionProps) => {
     const containerRef = useRef<HTMLDivElement>(null);
+    const [isMobile, setIsMobile] = useState(false);
+
+    useEffect(() => {
+        const checkMobile = () => setIsMobile(window.innerWidth <= 1024);
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
 
     // Precise Cinematic Easing
     const revealEase = [0.22, 1, 0.36, 1] as const;
@@ -109,7 +117,7 @@ export const HeroSection = ({ isActive = true, onPlay }: HeroSectionProps) => {
             </div>
 
             {/* Masked Reveal Typography */}
-            <div className="relative z-20 w-full h-full flex items-center justify-center pointer-events-none">
+            <div className="relative z-20 w-full h-full flex flex-col items-center justify-center pointer-events-none">
                 <div
                     className="flex flex-col items-center justify-center text-center text-white mix-blend-difference"
                     style={{ filter: 'drop-shadow(0 0 50px rgba(0,0,0,0.8)) drop-shadow(0 0 20px rgba(0,0,0,0.4))' }}
@@ -125,72 +133,93 @@ export const HeroSection = ({ isActive = true, onPlay }: HeroSectionProps) => {
                             text="CLARK"
                             delay={0.6}
                             animate={isActive ? "visible" : "hidden"}
-                            className="text-[12vw] leading-[0.8] font-black tracking-tighter uppercase select-none will-change-transform"
+                            className="text-[16vw] lg:text-[12vw] leading-[0.8] font-black tracking-tighter uppercase select-none will-change-transform"
                         />
                     </div>
 
                     {/* Line 2: & */}
-                    <div className="my-2 md:my-4 flex items-center justify-center" aria-hidden="true">
+                    <div className="my-4 lg:my-4 flex items-center justify-center" aria-hidden="true">
                         <MaskedRevealLine
                             text="&"
                             delay={0.9}
                             animate={isActive ? "visible" : "hidden"}
-                            className="text-[4vw] leading-[0.8] font-light italic text-white/90 tracking-tight uppercase select-none will-change-transform"
+                            className="text-[6vw] lg:text-[4vw] leading-[0.8] font-light italic text-white/90 tracking-tight uppercase select-none will-change-transform"
                         />
                     </div>
 
                     {/* Line 3: TIGRE VERDE */}
-                    <div className="flex items-center justify-center gap-[7.2em]" aria-hidden="true">
+                    <div className="flex flex-col lg:flex-row items-center justify-center gap-4 lg:gap-[7.2em]" aria-hidden="true">
                         <MaskedRevealLine
                             text="TIGRE"
                             delay={1.1}
                             animate={isActive ? "visible" : "hidden"}
-                            className="text-[12vw] leading-[0.8] font-black tracking-tighter uppercase select-none will-change-transform"
+                            className="text-[16vw] lg:text-[12vw] leading-[0.8] font-black tracking-tighter uppercase select-none will-change-transform"
                         />
                         <MaskedRevealLine
                             text="VERDE"
                             delay={1.4} // Staggered after TIGRE
                             animate={isActive ? "visible" : "hidden"}
-                            className="text-[12vw] leading-[0.8] font-black tracking-tighter uppercase select-none will-change-transform"
+                            className="text-[16vw] lg:text-[12vw] leading-[0.8] font-black tracking-tighter uppercase select-none will-change-transform"
                         />
                     </div>
 
                 </div>
+
+                {/* Mobile Play CTA - Centered below TIGRE VERDE */}
+                {isMobile && (
+                    <motion.div
+                        className="mt-12 flex flex-col items-center gap-4 group cursor-pointer pointer-events-auto"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 20 }}
+                        transition={{ delay: 1.8, duration: 0.8, ease: revealEase }}
+                        onClick={onPlay}
+                    >
+                        <div className="w-16 h-16 rounded-full border border-white/20 flex items-center justify-center bg-black/20 backdrop-blur-sm group-active:scale-95 transition-all">
+                            <Play className="w-5 h-5 text-white fill-white ml-1" />
+                        </div>
+                        <div className="flex flex-col items-center text-center">
+                            <span className="text-[10px] font-bold text-white uppercase tracking-[0.3em] mb-1">Play</span>
+                            <span className="text-[8px] text-white/60 uppercase tracking-[0.2em] leading-none">VIVÍ LA EXPERIENCIA</span>
+                        </div>
+                    </motion.div>
+                )}
             </div>
 
-            {/* Bottom Left - Play CTA */}
-            <motion.div
-                className="absolute bottom-10 left-8 md:bottom-16 md:left-16 z-30 flex items-center gap-6 group cursor-pointer"
-                initial={{ opacity: 0, scale: 0.94 }}
-                animate={{ opacity: isActive ? 1 : 0, scale: isActive ? 1 : 0.94 }}
-                transition={{ delay: 1.6, duration: 0.8, ease: revealEase }}
-                whileHover={{ scale: 1.05 }}
-                onClick={onPlay}
-            >
-                <div className="w-16 h-16 md:w-20 md:h-20 rounded-full border border-white/20 flex items-center justify-center group-hover:bg-accent/10 group-hover:border-accent group-hover:backdrop-blur-sm transition-all duration-300">
-                    <Play className="w-5 h-5 md:w-6 md:h-6 text-white group-hover:text-accent group-hover:fill-accent transition-colors ml-1" />
-                </div>
+            {/* Desktop Play CTA */}
+            {!isMobile && (
                 <motion.div
-                    className="flex flex-col text-left"
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: isActive ? 1 : 0, x: isActive ? 0 : -10 }}
-                    transition={{ delay: 1.7, duration: 0.8, ease: revealEase }}
+                    className="absolute bottom-16 left-16 z-30 flex items-center gap-6 group cursor-pointer"
+                    initial={{ opacity: 0, scale: 0.94 }}
+                    animate={{ opacity: isActive ? 1 : 0, scale: isActive ? 1 : 0.94 }}
+                    transition={{ delay: 1.6, duration: 0.8, ease: revealEase }}
+                    whileHover={{ scale: 1.05 }}
+                    onClick={onPlay}
                 >
-                    <span className="text-xs md:text-sm font-bold text-white uppercase tracking-[0.3em] mb-1 group-hover:text-accent transition-colors">Play</span>
-                    <span className="text-[10px] md:text-xs text-white/40 uppercase tracking-[0.2em] leading-none group-hover:text-white transition-colors">VIVÍ LA EXPERIENCIA</span>
+                    <div className="w-20 h-20 rounded-full border border-white/20 flex items-center justify-center group-hover:bg-accent/10 group-hover:border-accent group-hover:backdrop-blur-sm transition-all duration-300">
+                        <Play className="w-6 h-6 text-white group-hover:text-accent group-hover:fill-accent transition-colors ml-1" />
+                    </div>
+                    <motion.div
+                        className="flex flex-col text-left"
+                        initial={{ opacity: 0, x: -10 }}
+                        animate={{ opacity: isActive ? 1 : 0, x: isActive ? 0 : -10 }}
+                        transition={{ delay: 1.7, duration: 0.8, ease: revealEase }}
+                    >
+                        <span className="text-sm font-bold text-white uppercase tracking-[0.3em] mb-1 group-hover:text-accent transition-colors">Play</span>
+                        <span className="text-xs text-white/40 uppercase tracking-[0.2em] leading-none group-hover:text-white transition-colors">VIVÍ LA EXPERIENCIA</span>
+                    </motion.div>
                 </motion.div>
-            </motion.div>
+            )}
 
             {/* Bottom Info - Links & Location */}
             <motion.div
-                className="absolute bottom-10 left-1/2 -translate-x-1/2 md:translate-x-0 md:left-auto md:right-16 md:bottom-16 z-30 w-full md:w-auto px-8 md:px-0"
+                className="absolute bottom-8 lg:bottom-16 left-1/2 -translate-x-1/2 lg:translate-x-0 lg:left-auto lg:right-16 z-30 w-full lg:w-auto px-8 lg:px-0"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: isActive ? 1 : 0 }}
                 transition={{ duration: 0.8, delay: 1.8 }}
             >
-                <div className="flex flex-col md:flex-row items-center md:items-end justify-center md:justify-end gap-12 md:gap-24 text-[10px] md:text-sm font-medium tracking-[0.2em] uppercase pointer-events-auto">
-                    {/* Social links - Moved more to the middle-ish */}
-                    <div className="flex flex-col gap-3 items-center md:items-end">
+                <div className="flex flex-col lg:flex-row items-center lg:items-end justify-center lg:justify-end gap-6 lg:gap-24 text-[10px] md:text-sm font-medium tracking-[0.2em] uppercase pointer-events-auto">
+                    {/* Social links */}
+                    <div className="flex flex-row lg:flex-col gap-8 lg:gap-3 items-center lg:items-end">
                         <motion.a
                             href="https://www.instagram.com/clarrk__/"
                             target="_blank"
@@ -215,14 +244,14 @@ export const HeroSection = ({ isActive = true, onPlay }: HeroSectionProps) => {
                         </motion.a>
                     </div>
 
-                    {/* Location - Original spot */}
+                    {/* Location */}
                     <motion.div
-                        className="flex flex-col gap-1 items-center md:items-end text-white/50"
+                        className="flex flex-row lg:flex-col gap-2 lg:gap-1 items-center lg:items-end text-white/50"
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 20 }}
                         transition={{ delay: 2.1, duration: 0.8, ease: revealEase }}
                     >
-                        <span className="text-white">Buenos Aires</span>
+                        <span className="text-white">Buenos Aires,</span>
                         <span>Argentina</span>
                     </motion.div>
                 </div>

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Navigation } from './components/Navigation';
 import { HeroSection } from './components/HeroSection';
@@ -14,17 +14,32 @@ const SECTIONS = ['hero', 'experience', 'concept', 'differential', 'releases', '
 function App() {
   const [activeSection, setActiveSection] = useState('hero');
   const [isPlayingVideo, setIsPlayingVideo] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth <= 1024);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const activeIndex = SECTIONS.indexOf(activeSection);
 
   const handleSectionChange = (id: string) => {
     if (SECTIONS.includes(id)) {
       setActiveSection(id);
+
+      if (isMobile) {
+        const element = document.getElementById(id);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
     }
   };
 
   return (
-    <div className="bg-background h-screen w-full text-foreground font-sans selection:bg-accent selection:text-background overflow-hidden relative">
+    <div className={`bg-background w-full text-foreground font-sans selection:bg-accent selection:text-background relative ${isMobile ? 'overflow-y-auto h-auto' : 'overflow-hidden h-screen'}`}>
       <Navigation activeSection={activeSection} onSectionChange={handleSectionChange} />
 
       <AnimatePresence>
@@ -37,30 +52,32 @@ function App() {
       </AnimatePresence>
 
       <motion.main
-        className="relative z-10 w-full h-full"
-        animate={{ y: isPlayingVideo ? "0vh" : `-${activeIndex * 100}vh` }}
+        className="relative z-10 w-full"
+        animate={{
+          y: isMobile ? 0 : (isPlayingVideo ? "0vh" : `-${activeIndex * 100}vh`)
+        }}
         transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
       >
-        <div className="h-screen w-full">
+        <div id="hero" className="min-h-screen lg:h-screen w-full">
           <HeroSection
-            isActive={activeSection === 'hero' && !isPlayingVideo}
+            isActive={(isMobile || activeSection === 'hero') && !isPlayingVideo}
             onPlay={() => setIsPlayingVideo(true)}
           />
         </div>
-        <div className="h-screen w-full">
-          <PhysicalExperienceSection isActive={activeSection === 'experience'} />
+        <div id="experience" className="min-h-screen lg:h-screen w-full">
+          <PhysicalExperienceSection isActive={isMobile || activeSection === 'experience'} />
         </div>
-        <div className="h-screen w-full">
-          <ConceptSection isActive={activeSection === 'concept'} />
+        <div id="concept" className="min-h-screen lg:h-screen w-full">
+          <ConceptSection isActive={isMobile || activeSection === 'concept'} />
         </div>
-        <div className="h-screen w-full">
-          <DifferentialSection isActive={activeSection === 'differential'} />
+        <div id="differential" className="min-h-screen lg:h-screen w-full">
+          <DifferentialSection isActive={isMobile || activeSection === 'differential'} />
         </div>
-        <div className="h-screen w-full">
-          <ReleasesSection isActive={activeSection === 'releases'} />
+        <div id="releases" className="min-h-screen lg:h-screen w-full">
+          <ReleasesSection isActive={isMobile || activeSection === 'releases'} />
         </div>
-        <div className="h-screen w-full">
-          <FinalCTA isActive={activeSection === 'cta'} />
+        <div id="cta" className="min-h-screen lg:h-screen w-full">
+          <FinalCTA isActive={isMobile || activeSection === 'cta'} />
         </div>
       </motion.main>
     </div>

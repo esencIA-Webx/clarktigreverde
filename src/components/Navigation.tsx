@@ -22,7 +22,7 @@ export const Navigation = ({ activeSection, onSectionChange }: NavigationProps) 
 
     return (
         <>
-            <nav className="fixed top-0 left-0 right-0 z-50 flex items-start justify-between px-6 py-6 md:px-12 md:py-8 pointer-events-none">
+            <nav className="fixed top-0 left-0 right-0 z-50 flex items-start justify-between px-6 py-6 lg:px-12 lg:py-8 pointer-events-none">
                 {/* Logo - Top Left */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
@@ -42,7 +42,7 @@ export const Navigation = ({ activeSection, onSectionChange }: NavigationProps) 
                         <motion.img
                             src="/logo.png"
                             alt="Clark Tigre Logo"
-                            className="w-12 h-12 aspect-square object-contain bg-white rounded-lg p-1"
+                            className="w-10 h-10 lg:w-12 lg:h-12 aspect-square object-contain bg-white rounded-lg p-1"
                             whileHover={{ scale: 1.05 }}
                             transition={{ duration: 0.2 }}
                         />
@@ -76,18 +76,16 @@ export const Navigation = ({ activeSection, onSectionChange }: NavigationProps) 
                         transition={{
                             duration: 1.0,
                             ease: revealEase,
-                            // When closing, play slightly faster
                         }}
                     >
                         {/* Dark Background Wrapper */}
                         <div className="absolute inset-0 bg-[#0a0a0a] w-full h-full" />
 
                         {/* Content Container (Grid) */}
-                        <div className="relative w-full h-full flex flex-col md:flex-row">
+                        <div className="relative w-full h-full flex flex-col lg:flex-row">
 
                             {/* Left Column: Image (Cinematic View - Floating) */}
-                            <div className="hidden md:flex w-1/2 h-full relative items-center justify-center p-12 bg-[#0a0a0a] overflow-hidden">
-                                {/* Background subtle gradient for depth */}
+                            <div className="hidden lg:flex lg:w-1/2 h-full relative items-center justify-center p-12 bg-[#0a0a0a] overflow-hidden">
                                 <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-black/80 pointer-events-none" />
 
                                 <motion.div
@@ -106,26 +104,25 @@ export const Navigation = ({ activeSection, onSectionChange }: NavigationProps) 
                                             scale: 1.05
                                         }}
                                     />
-                                    {/* Subtle Overlay to match the theme */}
                                     <div className="absolute inset-0 bg-black/10 group-hover/img:bg-transparent transition-colors duration-700" />
                                 </motion.div>
                             </div>
 
                             {/* Right Column: Navigation Links & Info */}
-                            <div className="w-full md:w-1/2 h-full relative flex flex-col justify-between p-8 md:p-16 bg-[#0a0a0a]">
+                            <div className="w-full lg:w-1/2 h-full relative flex flex-col justify-between p-8 lg:p-16 bg-[#0a0a0a]">
 
                                 {/* Close Button */}
                                 <div className="flex justify-end">
                                     <button
                                         onClick={() => setIsOpen(false)}
-                                        className="text-[10px] uppercase tracking-widest hover:text-white/60 transition-colors flex items-center gap-2"
+                                        className="text-[10px] uppercase tracking-widest hover:text-white/60 transition-colors flex items-center gap-2 p-2"
                                     >
                                         Close <X size={14} />
                                     </button>
                                 </div>
 
                                 {/* Main Navigation Links */}
-                                <div className="flex flex-col gap-4 md:gap-6 mt-12 md:mt-0">
+                                <div className="flex flex-col items-center lg:items-start text-center lg:text-left gap-6 lg:gap-6 mt-12 lg:mt-0">
                                     {navItems.map((item, i) => (
                                         <div key={item.name} className="overflow-hidden">
                                             <motion.a
@@ -135,7 +132,7 @@ export const Navigation = ({ activeSection, onSectionChange }: NavigationProps) 
                                                     onSectionChange(item.id);
                                                     setIsOpen(false);
                                                 }}
-                                                className={`block text-5xl md:text-7xl font-black tracking-tighter uppercase leading-none transition-colors ${activeSection === item.id ? 'text-accent' : 'text-white hover:text-white/50'
+                                                className={`block text-4xl lg:text-7xl font-black tracking-tighter uppercase leading-none transition-colors ${activeSection === item.id ? 'text-accent' : 'text-white hover:text-white/50'
                                                     }`}
                                                 initial={{ y: "100%" }}
                                                 animate={{ y: "0%" }}
@@ -152,25 +149,26 @@ export const Navigation = ({ activeSection, onSectionChange }: NavigationProps) 
                                 </div>
 
                                 {/* Menu Footer / Info */}
-                                <div className="grid grid-cols-2 gap-8 text-[10px] uppercase tracking-widest text-white/50 mt-12 md:mt-0">
+                                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 text-[10px] md:text-[10px] uppercase tracking-widest text-white/50 mt-12 lg:mt-0 items-center lg:items-start text-center lg:text-left">
 
                                     {/* Socials */}
-                                    <div className="flex flex-col gap-4">
+                                    <div className="flex flex-col gap-4 items-center lg:items-start">
                                         <span className="text-white mb-2">Follow</span>
-                                        <a href="https://www.instagram.com/clarrk__/" target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors">clarrk__</a>
-                                        <a href="https://www.instagram.com/tigreverde__/" target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors">tigreverde__</a>
-                                        <a href="https://www.youtube.com/@ClarkTigreVerde" target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors">youtube</a>
+                                        <div className="flex flex-row lg:flex-col gap-6 lg:gap-4 justify-center">
+                                            <a href="https://www.instagram.com/clarrk__/" target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors">clarrk__</a>
+                                            <a href="https://www.instagram.com/tigreverde__/" target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors">tigreverde__</a>
+                                            <a href="https://www.youtube.com/@ClarkTigreVerde" target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors">youtube</a>
+                                        </div>
                                     </div>
 
                                     {/* Location / Contact */}
-                                    <div className="flex flex-col gap-4">
+                                    <div className="flex flex-col gap-4 items-center lg:items-start">
                                         <span className="text-white mb-2">Whatsapp</span>
                                         <a href="https://wa.me/5491167872149" target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors flex items-center gap-2">
                                             Contactar <ArrowRight size={10} />
                                         </a>
-                                        <div className="mt-4">
-                                            <p className="text-white">Buenos Aires</p>
-                                            <p>Argentina</p>
+                                        <div className="mt-4 lg:mt-4">
+                                            <p className="text-white">Buenos Aires, Argentina</p>
                                         </div>
                                     </div>
 

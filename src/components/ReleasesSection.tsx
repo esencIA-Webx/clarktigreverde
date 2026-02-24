@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Section } from './Section';
 
 interface Release {
@@ -40,90 +40,114 @@ interface ReleasesSectionProps {
 export const ReleasesSection = ({ isActive = false }: ReleasesSectionProps) => {
     const ease = [0.22, 1, 0.36, 1] as const;
     const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+    const [isMobile, setIsMobile] = useState(false);
+
+    useEffect(() => {
+        const checkMobile = () => setIsMobile(window.innerWidth <= 1024);
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
 
     return (
-        <Section id="releases" className="bg-[#0a0a0a] h-screen flex flex-col overflow-hidden">
-            <div className="w-full h-full flex flex-col px-8 md:px-16 py-10 md:py-14">
+        <Section id="releases" className="bg-[#0a0a0a] h-screen flex flex-col overflow-hidden py-12 lg:py-0">
+            <div className={`w-full h-full flex flex-col px-8 lg:px-16 ${isMobile ? 'py-4' : 'py-10 lg:py-14'}`}>
 
                 {/* Images + Centered Hover Title */}
-                <div className="flex-1 flex items-center relative">
+                <div className="flex-1 flex flex-col lg:flex-row lg:items-center relative">
 
-                    {/* Centered hover title — letter by letter curtain */}
-                    <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-20">
-                        <AnimatePresence mode="wait">
-                            {hoveredIndex !== null && (
-                                <motion.div
-                                    key={hoveredIndex}
-                                    className="flex items-end gap-0"
-                                    initial="hidden"
-                                    animate="visible"
-                                    exit="hidden"
-                                >
-                                    {releases[hoveredIndex].title.split('').map((char, i) => (
-                                        <div key={i} className="overflow-hidden leading-none">
-                                            <motion.span
-                                                className="block text-[7vw] font-black uppercase tracking-tighter text-white leading-none"
-                                                style={{ display: char === ' ' ? 'inline-block' : 'block', width: char === ' ' ? '2vw' : undefined }}
-                                                variants={{
-                                                    hidden: { y: '115%' },
-                                                    visible: { y: '0%' },
-                                                }}
-                                                transition={{
-                                                    duration: 0.45,
-                                                    ease: [0.22, 1, 0.36, 1],
-                                                    delay: i * 0.035,
-                                                }}
-                                            >
-                                                {char === ' ' ? '\u00A0' : char}
-                                            </motion.span>
-                                        </div>
-                                    ))}
-                                </motion.div>
-                            )}
-                        </AnimatePresence>
-                    </div>
+                    {/* Desktop-only Centered hover title — letter by letter curtain */}
+                    {!isMobile && (
+                        <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-20">
+                            <AnimatePresence mode="wait">
+                                {hoveredIndex !== null && (
+                                    <motion.div
+                                        key={hoveredIndex}
+                                        className="flex items-end gap-0"
+                                        initial="hidden"
+                                        animate="visible"
+                                        exit="hidden"
+                                    >
+                                        {releases[hoveredIndex].title.split('').map((char, i) => (
+                                            <div key={i} className="overflow-hidden leading-none">
+                                                <motion.span
+                                                    className="block text-[7vw] font-black uppercase tracking-tighter text-white leading-none"
+                                                    style={{ display: char === ' ' ? 'inline-block' : 'block', width: char === ' ' ? '2vw' : undefined }}
+                                                    variants={{
+                                                        hidden: { y: '115%' },
+                                                        visible: { y: '0%' },
+                                                    }}
+                                                    transition={{
+                                                        duration: 0.45,
+                                                        ease: [0.22, 1, 0.36, 1],
+                                                        delay: i * 0.035,
+                                                    }}
+                                                >
+                                                    {char === ' ' ? '\u00A0' : char}
+                                                </motion.span>
+                                            </div>
+                                        ))}
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
+                        </div>
+                    )}
 
-                    {/* Images row */}
-                    <div className="w-full flex justify-between items-center">
+                    {/* Images row / stack */}
+                    <div className={`w-full ${isMobile ? 'flex overflow-x-auto snap-x snap-mandatory no-scrollbar -mx-8 px-8 gap-10 pb-4' : 'flex flex-col lg:flex-row justify-between lg:items-center gap-16 lg:gap-0'}`}>
 
                         {releases.map((release, index) => (
-                            <motion.a
-                                key={index}
-                                href={release.link}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className={`relative overflow-hidden cursor-pointer block z-10 ${release.offset}`}
-                                style={{ width: release.width, aspectRatio: release.aspect, maxHeight: '65vh' }}
-                                initial={{ opacity: 0, y: 30 }}
-                                animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 30 }}
-                                transition={{ duration: 0.9, ease, delay: 0.2 + index * 0.15 }}
-                                onHoverStart={() => setHoveredIndex(index)}
-                                onHoverEnd={() => setHoveredIndex(null)}
-                            >
-                                <img
-                                    src={release.cover}
-                                    alt={release.title}
-                                    className={`w-full h-full object-cover transition-all duration-700 filter
-                                        ${hoveredIndex === index ? 'grayscale-0 scale-105' : 'grayscale scale-100'}`}
-                                />
-                                {/* Subtle dark overlay, fades on hover */}
-                                <div className={`absolute inset-0 transition-colors duration-500
-                                    ${hoveredIndex === index ? 'bg-black/10' : 'bg-black/30'}`} />
-                            </motion.a>
+                            <div key={index} className={`relative flex flex-col ${isMobile ? 'flex-shrink-0 w-[70vw] snap-center pt-8' : ''}`} style={{ width: isMobile ? '70vw' : release.width }}>
+                                <motion.a
+                                    href={release.link}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className={`relative overflow-hidden cursor-pointer block z-10 ${isMobile ? '' : release.offset}`}
+                                    style={{ width: '100%', aspectRatio: isMobile ? '1/1' : release.aspect, maxHeight: isMobile ? '45vh' : '65vh' }}
+                                    initial={{ opacity: 0, y: 30 }}
+                                    animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 30 }}
+                                    transition={{ duration: 0.9, ease, delay: 0.2 + index * 0.15 }}
+                                    onHoverStart={() => setHoveredIndex(index)}
+                                    onHoverEnd={() => setHoveredIndex(null)}
+                                >
+                                    <img
+                                        src={release.cover}
+                                        alt={release.title}
+                                        className={`w-full h-full object-cover transition-all duration-700 filter
+                                            ${(isMobile || hoveredIndex === index) ? 'grayscale-0 scale-105' : 'grayscale scale-100'}`}
+                                    />
+                                    {/* Subtle dark overlay, fades on hover */}
+                                    <div className={`absolute inset-0 transition-colors duration-500
+                                        ${(isMobile || hoveredIndex === index) ? 'bg-black/10' : 'bg-black/30'}`} />
+                                </motion.a>
+
+                                {/* Mobile Title (Always visible) */}
+                                {isMobile && (
+                                    <motion.div
+                                        initial={{ opacity: 0, y: 10 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        className="mt-4 pl-1"
+                                    >
+                                        <h3 className="text-white text-lg font-black tracking-tighter uppercase leading-none">{release.title}</h3>
+                                        <p className="text-white/40 text-[8px] tracking-[0.3em] mt-2 uppercase font-medium">{release.subtitle}</p>
+                                    </motion.div>
+                                )}
+                            </div>
                         ))}
 
                     </div>
+
                 </div>
 
                 {/* Footer row */}
-                <div className="flex items-center justify-between mt-8 md:mt-10">
+                <div className="flex items-center justify-between mt-auto">
                     <motion.p
                         className="text-[10px] uppercase tracking-[0.25em] text-white/40 font-medium"
                         initial={{ opacity: 0 }}
                         animate={{ opacity: isActive ? 1 : 0 }}
                         transition={{ duration: 0.6, delay: 0.1 }}
                     >
-                        Releases (2)
+                        Releases ({releases.length})
                     </motion.p>
                     <motion.h2
                         className="text-[10px] uppercase tracking-[0.25em] text-white/40 font-medium"

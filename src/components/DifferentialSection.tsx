@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Section } from './Section';
 
 const shows = [
@@ -31,9 +31,17 @@ interface DifferentialSectionProps {
 
 export const DifferentialSection = ({ isActive = false }: DifferentialSectionProps) => {
     const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+    const [isMobile, setIsMobile] = useState(false);
+
+    useEffect(() => {
+        const checkMobile = () => setIsMobile(window.innerWidth <= 1024);
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
 
     return (
-        <Section id="differential" className="flex items-center justify-center relative overflow-hidden h-screen w-full bg-black">
+        <Section id="differential" className="flex items-center justify-center relative overflow-hidden h-auto lg:h-screen w-full bg-black py-20 lg:py-0">
 
             {/* Cinematic Background with Curtain Reveal (Mirrors Hero) */}
             <div className="absolute inset-0 z-0 overflow-hidden bg-black">
@@ -69,9 +77,9 @@ export const DifferentialSection = ({ isActive = false }: DifferentialSectionPro
                 </motion.div>
             </div>
 
-            <div className="container mx-auto px-6 relative z-10 pt-20">
+            <div className="container mx-auto px-6 relative z-10">
                 <motion.h2
-                    className="text-[15vw] md:text-[12vw] font-black text-white mb-12 tracking-tighter leading-[0.8] uppercase"
+                    className="text-[15vw] lg:text-[12vw] font-black text-white mb-8 lg:mb-12 tracking-tighter leading-[0.8] uppercase"
                     initial={{ opacity: 0, y: 50 }}
                     animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 50 }}
                     transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
@@ -79,9 +87,9 @@ export const DifferentialSection = ({ isActive = false }: DifferentialSectionPro
                     SHOWS
                 </motion.h2>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div className={`${isMobile ? 'flex overflow-x-auto snap-x snap-mandatory no-scrollbar -mx-6 px-6 gap-6 pb-4' : 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8'}`}>
                     {shows.map((show, index) => (
-                        <div key={index} className="overflow-hidden">
+                        <div key={index} className={`${isMobile ? 'flex-shrink-0 w-[80vw] snap-center' : 'overflow-hidden'}`}>
                             <motion.div
                                 initial={{ y: "100%" }}
                                 animate={{ y: isActive ? "0%" : "100%" }}
@@ -90,7 +98,7 @@ export const DifferentialSection = ({ isActive = false }: DifferentialSectionPro
                                     ease: [0.22, 1, 0.36, 1],
                                     delay: 0.4 + (index * 0.1)
                                 }}
-                                whileHover={{
+                                whileHover={isMobile ? {} : {
                                     scale: 1.04,
                                     boxShadow: "0 0 40px rgba(255,255,255,0.08)",
                                     transition: { duration: 0.3, ease: "easeOut" }
@@ -103,11 +111,11 @@ export const DifferentialSection = ({ isActive = false }: DifferentialSectionPro
                                     src={show.image}
                                     alt={show.title}
                                     className={`w-full h-full object-cover transition-all duration-700 filter
-                                        ${hoveredIndex === index ? 'grayscale-0' : 'grayscale'}`}
+                                        ${(isMobile || hoveredIndex === index) ? 'grayscale-0' : 'grayscale'}`}
                                 />
                                 {/* Subtle overlay consistent with Música section */}
                                 <div className={`absolute inset-0 transition-colors duration-500
-                                    ${hoveredIndex === index ? 'bg-black/10' : 'bg-black/30'}`} />
+                                    ${(isMobile || hoveredIndex === index) ? 'bg-black/10' : 'bg-black/30'}`} />
                             </motion.div>
                         </div>
                     ))}
