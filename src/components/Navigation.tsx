@@ -95,6 +95,7 @@ export const Navigation = ({ activeSection, onSectionChange }: NavigationProps) 
                                     <OpticLensImage
                                         src="/assets/foto perfil.jpg"
                                         alt="Menu Aesthetic"
+                                        intensity={0.3}
                                         className="w-full h-full shadow-2xl"
                                     />
                                 </div>
@@ -146,16 +147,16 @@ export const Navigation = ({ activeSection, onSectionChange }: NavigationProps) 
                                     {/* Socials */}
                                     <div className="flex flex-col gap-4">
                                         <span className="text-white mb-2">Follow</span>
-                                        <a href="#" className="hover:text-white transition-colors">Instagram</a>
-                                        <a href="#" className="hover:text-white transition-colors">LinkedIn</a>
-                                        <a href="#" className="hover:text-white transition-colors">SoundCloud</a>
+                                        <a href="https://www.instagram.com/clarrk__/" target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors">clarrk__</a>
+                                        <a href="https://www.instagram.com/tigreverde__/" target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors">tigreverde__</a>
+                                        <a href="https://www.youtube.com/@ClarkTigreVerde" target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors">youtube</a>
                                     </div>
 
                                     {/* Location / Contact */}
                                     <div className="flex flex-col gap-4">
-                                        <span className="text-white mb-2">Get in Touch</span>
-                                        <a href="mailto:hello@clarktigre.com" className="hover:text-white transition-colors flex items-center gap-2">
-                                            Email <ArrowRight size={10} />
+                                        <span className="text-white mb-2">Whatsapp</span>
+                                        <a href="https://wa.me/5491167872149" target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors flex items-center gap-2">
+                                            Contactar <ArrowRight size={10} />
                                         </a>
                                         <div className="mt-4">
                                             <p className="text-white">Buenos Aires</p>

@@ -81,7 +81,7 @@ export const HeroSection = ({ isActive = true, onPlay }: HeroSectionProps) => {
                         delay: 0.3
                     }}
                 >
-                    <div className="absolute inset-0 bg-black/40 z-10" />
+                    <div className="absolute inset-0 bg-black/50 z-10" />
 
                     <motion.div
                         className="w-full h-full will-change-transform"
@@ -110,7 +110,10 @@ export const HeroSection = ({ isActive = true, onPlay }: HeroSectionProps) => {
 
             {/* Masked Reveal Typography */}
             <div className="relative z-20 w-full h-full flex items-center justify-center pointer-events-none">
-                <div className="flex flex-col items-center justify-center text-center text-white mix-blend-difference">
+                <div
+                    className="flex flex-col items-center justify-center text-center text-white mix-blend-difference"
+                    style={{ filter: 'drop-shadow(0 0 50px rgba(0,0,0,0.8)) drop-shadow(0 0 20px rgba(0,0,0,0.4))' }}
+                >
 
                     {/* Visual Title Structure - using divs for layout and aria-hidden */}
                     {/* Separate h1 for SEO/Accessibility */}
@@ -148,7 +151,7 @@ export const HeroSection = ({ isActive = true, onPlay }: HeroSectionProps) => {
                             text="VERDE"
                             delay={1.4} // Staggered after TIGRE
                             animate={isActive ? "visible" : "hidden"}
-                            className="text-[12vw] leading-[0.8] font-black tracking-tighter uppercase text-accent select-none will-change-transform"
+                            className="text-[12vw] leading-[0.8] font-black tracking-tighter uppercase select-none will-change-transform"
                         />
                     </div>
 

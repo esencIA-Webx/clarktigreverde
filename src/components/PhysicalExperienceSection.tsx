@@ -63,29 +63,21 @@ export const PhysicalExperienceSection = ({ isActive = false }: PhysicalExperien
                             <div>
                                 <span className="text-[10px] uppercase tracking-[0.4em] text-accent font-bold mb-4 block">Manifesto / Vision</span>
                                 <h2 className="text-4xl md:text-5xl font-bold leading-[1.1] tracking-tight">
-                                    CLARK & TIGRE VERDE: La arquitectura del <span className="italic font-light">silencio eléctrico</span>.
+                                    EL MUNDO DE <span className="italic font-light text-accent">CLARK & TIGRE VERDE</span>
                                 </h2>
                             </div>
 
                             <div className="space-y-6 text-lg md:text-xl font-light leading-relaxed">
                                 <p className="text-zinc-400">
-                                    No somos simplemente un dúo de música electrónica; somos una exploración de la tracción física. El proyecto Clark & Tigre Verde surge como una respuesta a la saturación semántica contemporánea. En un mundo donde todo está explicado y etiquetado, nosotros elegimos la abstracción.
+                                    No somos solo un proyecto de música electrónica, sino también la materialización de un mundo que creamos para que sea habitado por todos los que nos rodean y aman la música. Somos dos artistas que nos conocemos desde hace mucho tiempo y que hemos transitado grandes aventuras y desafíos. Lo que comenzó como un juego, se materializó hacia fines de 2024 en algo que pronto mostró la pulsión de salir y crecer.
                                 </p>
 
                                 <p className="text-zinc-400">
-                                    Nuestra propuesta se basa en planos sincronizados de ejecución instrumental. La batería no solo marca el tiempo, es el pulso cardíaco de la performance. Los sintetizadores no son melodías, son atmósferas densas que envuelven el espacio, creando una experiencia inmersiva donde el espectador no solo escucha, sino que habita el sonido.
+                                    Para nosotros la música y lo visual no pueden ser pensadas por separado. Nuestra sonoridad profunda y enérgica se funde con una realidad paralela en la que pasan muchas cosas y todo está en constante cambio. Cada show en vivo tiene su lore y los flyers son el reflejo de la aventura en la que nos embarcamos en cada oportunidad.
                                 </p>
 
-                                <p className="text-zinc-300 italic border-l-2 border-accent pl-6 py-2">
-                                    "La energía no se explica, se transmite. Buscamos el impacto crudo que precede a la palabra."
-                                </p>
-
-                                <p className="text-zinc-500">
-                                    Cada sesión es un organismo vivo que muta según la acústica y la energía del entorno. Desde las salas experimentales de Buenos Aires hasta los escenarios tecnificados de Europa, nuestra misión permanece constante: empujar los límites de la performance física y el diseño sonoro de vanguardia.
-                                </p>
-
-                                <p className="text-zinc-500">
-                                    Hoy, Clark & Tigre Verde evoluciona hacia una plataforma curatorial, colaborando con artistas visuales y diseñadores para crear mundos donde la tecnología y el instinto humano se encuentran en perfecta sincronía.
+                                <p className="text-zinc-300 font-medium">
+                                    Sean bienvenidos a nuestro mundo... ¡El mundo de Clark & Tigre Verde!
                                 </p>
                             </div>
                         </motion.div>
@@ -93,44 +85,64 @@ export const PhysicalExperienceSection = ({ isActive = false }: PhysicalExperien
 
                     {/* Right Column: Details (4/12) */}
                     <div className="lg:col-span-4 flex flex-col gap-12 lg:pl-12 border-l border-white/10">
-                        {/* Section 1 */}
+                        {/* Section 1: Intro */}
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 20 }}
                             transition={{ duration: 0.8, delay: 0.5, ease: revealEase }}
                         >
-                            <h3 className="text-[10px] uppercase tracking-[0.4em] text-zinc-500 font-bold mb-4">Core Focus</h3>
+                            <h3 className="text-[10px] uppercase tracking-[0.4em] text-zinc-500 font-bold mb-4">Digital Ecosystem</h3>
                             <p className="text-sm md:text-base text-zinc-300 font-light leading-snug">
-                                Nuestra marca encarna el estilo de vida de los creadores en la comunidad creativa contemporánea, enfocándose en la tracción y el impacto visual.
+                                Nuestra propuesta trasciende el escenario, habitando plataformas donde la música y la estética visual convergen para expandir el universo de Clark & Tigre Verde.
                             </p>
                         </motion.div>
 
-                        {/* Section 2 */}
+                        {/* Section 2: Social */}
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 20 }}
                             transition={{ duration: 0.8, delay: 0.6, ease: revealEase }}
                         >
-                            <h3 className="text-[10px] uppercase tracking-[0.4em] text-zinc-500 font-bold mb-4">Press Releases</h3>
-                            <ul className="text-[11px] md:text-xs text-zinc-400 space-y-3 uppercase tracking-widest font-medium">
-                                <li className="hover:text-accent transition-colors cursor-pointer">Electronic Beats</li>
-                                <li className="hover:text-accent transition-colors cursor-pointer">Rolling Stone Ar</li>
-                                <li className="hover:text-accent transition-colors cursor-pointer">Indie Hoy</li>
-                                <li className="hover:text-accent transition-colors cursor-pointer">Página 12</li>
-                            </ul>
+                            <h3 className="text-[10px] uppercase tracking-[0.4em] text-zinc-500 font-bold mb-6">Social Platforms</h3>
+
+                            <div className="space-y-6">
+                                <div>
+                                    <span className="text-[9px] uppercase tracking-widest text-zinc-600 block mb-3 font-bold">Instagram</span>
+                                    <ul className="text-[11px] md:text-xs text-zinc-400 space-y-3 uppercase tracking-widest font-medium">
+                                        <li>
+                                            <a href="https://www.instagram.com/clarrk__/" target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors">clarrk__</a>
+                                        </li>
+                                        <li>
+                                            <a href="https://www.instagram.com/tigreverde__/" target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors">tigreverde__</a>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div>
+                                    <span className="text-[9px] uppercase tracking-widest text-zinc-600 block mb-3 font-bold">YouTube</span>
+                                    <ul className="text-[11px] md:text-xs text-zinc-400 space-y-3 uppercase tracking-widest font-medium">
+                                        <li>
+                                            <a href="https://www.youtube.com/@ClarkTigreVerde" target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors">official channel</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
                         </motion.div>
 
-                        {/* Section 3 */}
+                        {/* Section 3: Contact */}
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 20 }}
                             transition={{ duration: 0.8, delay: 0.7, ease: revealEase }}
                         >
-                            <h3 className="text-[10px] uppercase tracking-[0.4em] text-zinc-500 font-bold mb-4">Recent Projects</h3>
+                            <h3 className="text-[10px] uppercase tracking-[0.4em] text-zinc-500 font-bold mb-4">Direct Access</h3>
                             <ul className="text-[11px] md:text-xs text-zinc-400 space-y-3 uppercase tracking-widest font-medium">
-                                <li className="hover:text-accent transition-colors cursor-pointer">MUTEK BA 2024</li>
-                                <li className="hover:text-accent transition-colors cursor-pointer">CASSETTE LIVE ROOM</li>
-                                <li className="hover:text-accent transition-colors cursor-pointer">EXPERIMENTAL LOOP SESSION</li>
+                                <li>
+                                    <a href="https://wa.me/5491167872149" target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors">Whatsapp / Contactar</a>
+                                </li>
+                                <li>
+                                    <a href="mailto:clarkytigreverde@gmail.com" className="hover:text-accent transition-colors lowecase">clarkytigreverde@gmail.com</a>
+                                </li>
                             </ul>
                         </motion.div>
                     </div>

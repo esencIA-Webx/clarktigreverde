@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { useState } from 'react';
 import { Section } from './Section';
 
 const shows = [
@@ -29,6 +30,8 @@ interface DifferentialSectionProps {
 }
 
 export const DifferentialSection = ({ isActive = false }: DifferentialSectionProps) => {
+    const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+
     return (
         <Section id="differential" className="flex items-center justify-center relative overflow-hidden h-screen w-full bg-black">
 
@@ -90,15 +93,21 @@ export const DifferentialSection = ({ isActive = false }: DifferentialSectionPro
                                 whileHover={{
                                     scale: 1.04,
                                     boxShadow: "0 0 40px rgba(255,255,255,0.08)",
-                                    transition: { duration: 0.2, ease: "easeOut" }
+                                    transition: { duration: 0.3, ease: "easeOut" }
                                 }}
+                                onMouseEnter={() => setHoveredIndex(index)}
+                                onMouseLeave={() => setHoveredIndex(null)}
                                 className="relative aspect-[3/4] bg-zinc-900 border border-white/5 overflow-hidden cursor-pointer"
                             >
                                 <img
                                     src={show.image}
                                     alt={show.title}
-                                    className="w-full h-full object-cover"
+                                    className={`w-full h-full object-cover transition-all duration-700 filter
+                                        ${hoveredIndex === index ? 'grayscale-0' : 'grayscale'}`}
                                 />
+                                {/* Subtle overlay consistent with Música section */}
+                                <div className={`absolute inset-0 transition-colors duration-500
+                                    ${hoveredIndex === index ? 'bg-black/10' : 'bg-black/30'}`} />
                             </motion.div>
                         </div>
                     ))}
