@@ -168,18 +168,18 @@ export const HeroSection = ({ isActive = true, onPlay }: HeroSectionProps) => {
                 {/* Mobile Play CTA - Centered below TIGRE VERDE */}
                 {isMobile && (
                     <motion.div
-                        className="mt-12 flex flex-col items-center gap-4 group cursor-pointer pointer-events-auto"
+                        className="mt-12 flex flex-col items-center gap-5 group cursor-pointer pointer-events-auto"
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 20 }}
                         transition={{ delay: 1.8, duration: 0.8, ease: revealEase }}
                         onClick={onPlay}
                     >
-                        <div className="w-16 h-16 rounded-full border border-white/20 flex items-center justify-center bg-black/20 backdrop-blur-sm group-active:scale-95 transition-all">
-                            <Play className="w-5 h-5 text-white fill-white ml-1" />
+                        <div className="w-20 h-20 rounded-full border border-white/20 flex items-center justify-center bg-black/20 backdrop-blur-sm group-active:scale-95 transition-all">
+                            <Play className="w-6 h-6 text-white fill-white ml-1" />
                         </div>
                         <div className="flex flex-col items-center text-center">
-                            <span className="text-[10px] font-bold text-white uppercase tracking-[0.3em] mb-1">Play</span>
-                            <span className="text-[8px] text-white/60 uppercase tracking-[0.2em] leading-none">VIVÍ LA EXPERIENCIA</span>
+                            <span className="text-xs font-bold text-white uppercase tracking-[0.3em] mb-1">Play</span>
+                            <span className="text-[10px] text-white/60 uppercase tracking-[0.2em] leading-none">VIVÍ LA EXPERIENCIA</span>
                         </div>
                     </motion.div>
                 )}

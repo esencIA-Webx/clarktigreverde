@@ -94,16 +94,16 @@ export const ReleasesSection = ({ isActive = false }: ReleasesSectionProps) => {
                     )}
 
                     {/* Images row / stack */}
-                    <div className={`w-full ${isMobile ? 'flex overflow-x-auto snap-x snap-mandatory no-scrollbar -mx-8 px-8 gap-10 pb-4' : 'flex flex-col lg:flex-row justify-between lg:items-center gap-16 lg:gap-0'}`}>
+                    <div className={`w-full ${isMobile ? 'flex flex-row justify-center gap-6 pb-4' : 'flex flex-col lg:flex-row justify-between lg:items-center gap-16 lg:gap-0'}`}>
 
                         {releases.map((release, index) => (
-                            <div key={index} className={`relative flex flex-col ${isMobile ? 'flex-shrink-0 w-[70vw] snap-center pt-8' : ''}`} style={{ width: isMobile ? '70vw' : release.width }}>
+                            <div key={index} className={`relative flex flex-col ${isMobile ? 'w-[44vw] pt-4' : ''}`} style={{ width: isMobile ? '44vw' : release.width }}>
                                 <motion.a
                                     href={release.link}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className={`relative overflow-hidden cursor-pointer block z-10 ${isMobile ? '' : release.offset}`}
-                                    style={{ width: '100%', aspectRatio: isMobile ? '1/1' : release.aspect, maxHeight: isMobile ? '45vh' : '65vh' }}
+                                    style={{ width: '100%', aspectRatio: isMobile ? '1/1' : release.aspect, maxHeight: isMobile ? '35vh' : '65vh' }}
                                     initial={{ opacity: 0, y: 30 }}
                                     animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 30 }}
                                     transition={{ duration: 0.9, ease, delay: 0.2 + index * 0.15 }}
@@ -126,10 +126,10 @@ export const ReleasesSection = ({ isActive = false }: ReleasesSectionProps) => {
                                     <motion.div
                                         initial={{ opacity: 0, y: 10 }}
                                         animate={{ opacity: 1, y: 0 }}
-                                        className="mt-4 pl-1"
+                                        className="mt-3 px-1"
                                     >
-                                        <h3 className="text-white text-lg font-black tracking-tighter uppercase leading-none">{release.title}</h3>
-                                        <p className="text-white/40 text-[8px] tracking-[0.3em] mt-2 uppercase font-medium">{release.subtitle}</p>
+                                        <h3 className="text-white text-xs font-black tracking-tighter uppercase leading-tight">{release.title}</h3>
+                                        <p className="text-white/40 text-[7px] tracking-[0.2em] mt-1 uppercase font-medium">{release.subtitle}</p>
                                     </motion.div>
                                 )}
                             </div>
