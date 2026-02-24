@@ -113,6 +113,8 @@ export const ReleasesSection = ({ isActive = false }: ReleasesSectionProps) => {
                                     <img
                                         src={release.cover}
                                         alt={release.title}
+                                        loading="lazy"
+                                        decoding="async"
                                         className={`w-full h-full object-cover transition-all duration-700 filter
                                             ${(isMobile || hoveredIndex === index) ? 'grayscale-0 scale-105' : 'grayscale scale-100'}`}
                                     />

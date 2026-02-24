@@ -3,13 +3,11 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Navigation } from './components/Navigation';
 import { HeroSection } from './components/HeroSection';
 import { PhysicalExperienceSection } from './components/PhysicalExperienceSection';
-import { ConceptSection } from './components/ConceptSection';
 import { DifferentialSection } from './components/DifferentialSection';
 import { ReleasesSection } from './components/ReleasesSection';
-import { FinalCTA } from './components/FinalCTA';
 import { CinematicVideoPlayer } from './components/CinematicVideoPlayer';
 
-const SECTIONS = ['hero', 'experience', 'concept', 'differential', 'releases', 'cta'];
+const SECTIONS = ['hero', 'experience', 'differential', 'releases'];
 
 function App() {
   const [activeSection, setActiveSection] = useState('hero');
@@ -67,17 +65,11 @@ function App() {
         <div id="experience" className="min-h-screen lg:h-screen w-full">
           <PhysicalExperienceSection isActive={isMobile || activeSection === 'experience'} />
         </div>
-        <div id="concept" className="min-h-screen lg:h-screen w-full">
-          <ConceptSection isActive={isMobile || activeSection === 'concept'} />
-        </div>
         <div id="differential" className="min-h-screen lg:h-screen w-full">
           <DifferentialSection isActive={isMobile || activeSection === 'differential'} />
         </div>
         <div id="releases" className="min-h-screen lg:h-screen w-full">
           <ReleasesSection isActive={isMobile || activeSection === 'releases'} />
-        </div>
-        <div id="cta" className="min-h-screen lg:h-screen w-full">
-          <FinalCTA isActive={isMobile || activeSection === 'cta'} />
         </div>
       </motion.main>
     </div>

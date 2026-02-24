@@ -110,6 +110,8 @@ export const DifferentialSection = ({ isActive = false }: DifferentialSectionPro
                                 <img
                                     src={show.image}
                                     alt={show.title}
+                                    loading="lazy"
+                                    decoding="async"
                                     className={`w-full h-full object-cover transition-all duration-700 filter
                                         ${(isMobile || hoveredIndex === index) ? 'grayscale-0' : 'grayscale'}`}
                                 />

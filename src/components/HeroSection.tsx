@@ -101,6 +101,7 @@ export const HeroSection = ({ isActive = true, onPlay }: HeroSectionProps) => {
                             loading="eager"
                             // @ts-ignore
                             fetchpriority="high"
+                            decoding="async"
                             initial={{ scale: 1.1, filter: "blur(10px)" }}
                             animate={{
                                 scale: isActive ? 1 : 1.1,

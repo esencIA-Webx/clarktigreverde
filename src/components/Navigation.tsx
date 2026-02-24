@@ -109,7 +109,7 @@ export const Navigation = ({ activeSection, onSectionChange }: NavigationProps) 
                             </div>
 
                             {/* Right Column: Navigation Links & Info */}
-                            <div className="w-full lg:w-1/2 h-full relative flex flex-col justify-between p-8 lg:p-16 bg-[#0a0a0a]">
+                            <div className="w-full lg:w-1/2 h-full relative flex flex-col justify-between p-6 lg:p-16 bg-[#0a0a0a]">
 
                                 {/* Close Button */}
                                 <div className="flex justify-end">
@@ -124,7 +124,7 @@ export const Navigation = ({ activeSection, onSectionChange }: NavigationProps) 
                                 {/* Main Navigation Links */}
                                 <div className="flex flex-col items-center lg:items-start text-center lg:text-left gap-6 lg:gap-6 mt-12 lg:mt-0">
                                     {navItems.map((item, i) => (
-                                        <div key={item.name} className="overflow-hidden">
+                                        <div key={item.name} className="overflow-hidden w-full">
                                             <motion.a
                                                 href={`#${item.id}`}
                                                 onClick={(e) => {
@@ -132,7 +132,7 @@ export const Navigation = ({ activeSection, onSectionChange }: NavigationProps) 
                                                     onSectionChange(item.id);
                                                     setIsOpen(false);
                                                 }}
-                                                className={`block text-4xl lg:text-7xl font-black tracking-tighter uppercase leading-none transition-colors ${activeSection === item.id ? 'text-accent' : 'text-white hover:text-white/50'
+                                                className={`block text-[11vw] xs:text-5xl md:text-6xl lg:text-7xl font-black tracking-tighter uppercase leading-none transition-colors ${activeSection === item.id ? 'text-accent' : 'text-white hover:text-white/50'
                                                     }`}
                                                 initial={{ y: "100%" }}
                                                 animate={{ y: "0%" }}
