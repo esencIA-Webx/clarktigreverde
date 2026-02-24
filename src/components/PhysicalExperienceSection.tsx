@@ -31,7 +31,7 @@ export const PhysicalExperienceSection = ({ isActive = false }: PhysicalExperien
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-12 items-start text-white">
 
                     {/* Main Text (5/12) - Top on Mobile */}
-                    <div className="lg:col-span-5 flex flex-col gap-10 order-1">
+                    <div className="lg:col-span-5 flex flex-col gap-10 order-1 lg:order-2">
                         <motion.div
                             initial={{ opacity: 0, y: 30 }}
                             animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 30 }}
@@ -62,7 +62,7 @@ export const PhysicalExperienceSection = ({ isActive = false }: PhysicalExperien
                     </div>
 
                     {/* Details (4/12) - Middle on Mobile */}
-                    <div className="lg:col-span-4 flex flex-col gap-12 lg:pl-12 lg:border-l border-white/10 order-2">
+                    <div className="lg:col-span-4 flex flex-col gap-12 lg:pl-12 lg:border-l border-white/10 order-2 lg:order-3">
                         {/* Section 1: Intro */}
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
@@ -125,7 +125,7 @@ export const PhysicalExperienceSection = ({ isActive = false }: PhysicalExperien
                     </div>
 
                     {/* Stacked Images (3/12) - Bottom on Mobile */}
-                    <div className="lg:col-span-3 flex flex-row lg:flex-col gap-6 lg:gap-10 h-full items-center order-3 mt-8 lg:mt-0">
+                    <div className="lg:col-span-3 flex flex-row lg:flex-col gap-6 lg:gap-10 h-full items-center order-3 lg:order-1 mt-8 lg:mt-0">
                         <motion.div
                             initial={{ opacity: 0, x: isMobile ? 0 : -30, y: isMobile ? 30 : 0 }}
                             animate={{ opacity: isActive ? 1 : 0, x: isActive ? 0 : (isMobile ? 0 : -30), y: isActive ? 0 : (isMobile ? 30 : 0) }}
