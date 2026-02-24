@@ -29,7 +29,7 @@ const releases: Release[] = [
         link: "https://www.youtube.com/watch?v=6mmNrXqCtag",
         aspect: "3/4",
         width: "22%",
-        offset: "-mt-28",
+        offset: "-mt-16",
     },
 ];
 

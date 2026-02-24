@@ -132,7 +132,7 @@ export const Navigation = ({ activeSection, onSectionChange }: NavigationProps) 
                                                     onSectionChange(item.id);
                                                     setIsOpen(false);
                                                 }}
-                                                className={`block text-[11vw] xs:text-5xl md:text-6xl lg:text-7xl font-black tracking-tighter uppercase leading-none transition-colors ${activeSection === item.id ? 'text-accent' : 'text-white hover:text-white/50'
+                                                className={`block text-[11vw] xs:text-5xl md:text-6xl lg:text-6xl font-black tracking-tighter uppercase leading-none transition-colors ${activeSection === item.id ? 'text-accent' : 'text-white hover:text-white/50'
                                                     }`}
                                                 initial={{ y: "100%" }}
                                                 animate={{ y: "0%" }}
