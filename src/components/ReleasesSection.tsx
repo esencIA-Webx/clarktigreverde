@@ -51,7 +51,7 @@ export const ReleasesSection = ({ isActive = false }: ReleasesSectionProps) => {
 
     return (
         <Section id="releases" className="bg-[#0a0a0a] h-screen flex flex-col overflow-hidden py-12 lg:py-0">
-            <div className={`w-full h-full flex flex-col px-8 lg:px-16 ${isMobile ? 'py-4' : 'py-10 lg:py-14'}`}>
+            <div className={`w-full h-full flex flex-col px-8 lg:px-16 ${isMobile ? 'py-4' : 'py-8 lg:py-12'}`}>
 
                 {/* Images + Centered Hover Title */}
                 <div className="flex-1 flex flex-col lg:flex-row lg:items-center relative">
@@ -71,8 +71,8 @@ export const ReleasesSection = ({ isActive = false }: ReleasesSectionProps) => {
                                         {releases[hoveredIndex].title.split('').map((char, i) => (
                                             <div key={i} className="overflow-hidden leading-none">
                                                 <motion.span
-                                                    className="block text-[7vw] font-black uppercase tracking-tighter text-white leading-none"
-                                                    style={{ display: char === ' ' ? 'inline-block' : 'block', width: char === ' ' ? '2vw' : undefined }}
+                                                    className="block text-[6vw] font-black uppercase tracking-tighter text-white leading-none"
+                                                    style={{ display: char === ' ' ? 'inline-block' : 'block', width: char === ' ' ? '1.5vw' : undefined }}
                                                     variants={{
                                                         hidden: { y: '115%' },
                                                         visible: { y: '0%' },

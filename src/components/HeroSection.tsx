@@ -134,33 +134,33 @@ export const HeroSection = ({ isActive = true, onPlay }: HeroSectionProps) => {
                             text="CLARK"
                             delay={0.6}
                             animate={isActive ? "visible" : "hidden"}
-                            className="text-[16vw] lg:text-[12vw] leading-[0.8] font-black tracking-tighter uppercase select-none will-change-transform"
+                            className="text-[16vw] lg:text-[10vw] leading-[0.8] font-black tracking-tighter uppercase select-none will-change-transform"
                         />
                     </div>
 
                     {/* Line 2: & */}
-                    <div className="my-4 lg:my-4 flex items-center justify-center" aria-hidden="true">
+                    <div className="my-3 lg:my-3 flex items-center justify-center" aria-hidden="true">
                         <MaskedRevealLine
                             text="&"
                             delay={0.9}
                             animate={isActive ? "visible" : "hidden"}
-                            className="text-[6vw] lg:text-[4vw] leading-[0.8] font-light italic text-white/90 tracking-tight uppercase select-none will-change-transform"
+                            className="text-[6vw] lg:text-[3.5vw] leading-[0.8] font-light italic text-white/90 tracking-tight uppercase select-none will-change-transform"
                         />
                     </div>
 
                     {/* Line 3: TIGRE VERDE */}
-                    <div className="flex flex-col lg:flex-row items-center justify-center gap-4 lg:gap-[7.2em]" aria-hidden="true">
+                    <div className="flex flex-col lg:flex-row items-center justify-center gap-4 lg:gap-[0.5em]" aria-hidden="true">
                         <MaskedRevealLine
                             text="TIGRE"
                             delay={1.1}
                             animate={isActive ? "visible" : "hidden"}
-                            className="text-[16vw] lg:text-[12vw] leading-[0.8] font-black tracking-tighter uppercase select-none will-change-transform"
+                            className="text-[16vw] lg:text-[10vw] leading-[0.8] font-black tracking-tighter uppercase select-none will-change-transform"
                         />
                         <MaskedRevealLine
                             text="VERDE"
-                            delay={1.4} // Staggered after TIGRE
+                            delay={1.4}
                             animate={isActive ? "visible" : "hidden"}
-                            className="text-[16vw] lg:text-[12vw] leading-[0.8] font-black tracking-tighter uppercase select-none will-change-transform"
+                            className="text-[16vw] lg:text-[10vw] leading-[0.8] font-black tracking-tighter uppercase select-none will-change-transform"
                         />
                     </div>
 
@@ -189,15 +189,15 @@ export const HeroSection = ({ isActive = true, onPlay }: HeroSectionProps) => {
             {/* Desktop Play CTA */}
             {!isMobile && (
                 <motion.div
-                    className="absolute bottom-16 left-16 z-30 flex items-center gap-6 group cursor-pointer"
+                    className="absolute bottom-12 left-12 z-30 flex items-center gap-6 group cursor-pointer"
                     initial={{ opacity: 0, scale: 0.94 }}
                     animate={{ opacity: isActive ? 1 : 0, scale: isActive ? 1 : 0.94 }}
                     transition={{ delay: 1.6, duration: 0.8, ease: revealEase }}
                     whileHover={{ scale: 1.05 }}
                     onClick={onPlay}
                 >
-                    <div className="w-20 h-20 rounded-full border border-white/20 flex items-center justify-center group-hover:bg-accent/10 group-hover:border-accent group-hover:backdrop-blur-sm transition-all duration-300">
-                        <Play className="w-6 h-6 text-white group-hover:text-accent group-hover:fill-accent transition-colors ml-1" />
+                    <div className="w-16 h-16 rounded-full border border-white/20 flex items-center justify-center group-hover:bg-accent/10 group-hover:border-accent group-hover:backdrop-blur-sm transition-all duration-300">
+                        <Play className="w-5 h-5 text-white group-hover:text-accent group-hover:fill-accent transition-colors ml-1" />
                     </div>
                     <motion.div
                         className="flex flex-col text-left"
@@ -205,29 +205,29 @@ export const HeroSection = ({ isActive = true, onPlay }: HeroSectionProps) => {
                         animate={{ opacity: isActive ? 1 : 0, x: isActive ? 0 : -10 }}
                         transition={{ delay: 1.7, duration: 0.8, ease: revealEase }}
                     >
-                        <span className="text-sm font-bold text-white uppercase tracking-[0.3em] mb-1 group-hover:text-accent transition-colors">Play</span>
-                        <span className="text-xs text-white/40 uppercase tracking-[0.2em] leading-none group-hover:text-white transition-colors">VIVÍ LA EXPERIENCIA</span>
+                        <span className="text-xs font-bold text-white uppercase tracking-[0.3em] mb-1 group-hover:text-accent transition-colors">Play</span>
+                        <span className="text-[10px] text-white/40 uppercase tracking-[0.2em] leading-none group-hover:text-white transition-colors">VIVÍ LA EXPERIENCIA</span>
                     </motion.div>
                 </motion.div>
             )}
 
             {/* Bottom Info - Links & Location */}
             <motion.div
-                className="absolute bottom-8 lg:bottom-16 left-1/2 -translate-x-1/2 lg:translate-x-0 lg:left-auto lg:right-16 z-30 w-full lg:w-auto px-8 lg:px-0"
+                className="absolute bottom-8 lg:bottom-12 left-1/2 -translate-x-1/2 lg:translate-x-0 lg:left-auto lg:right-12 z-30 w-full lg:w-auto px-8 lg:px-0"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: isActive ? 1 : 0 }}
                 transition={{ duration: 0.8, delay: 1.8 }}
             >
-                <div className="flex flex-col lg:flex-row items-center lg:items-end justify-center lg:justify-end gap-6 lg:gap-24 text-[10px] md:text-sm font-medium tracking-[0.2em] uppercase pointer-events-auto">
+                <div className="flex flex-col lg:flex-row items-center lg:items-end justify-center lg:justify-end gap-6 lg:gap-16 text-[9px] md:text-xs font-medium tracking-[0.2em] uppercase pointer-events-auto">
                     {/* Social links */}
-                    <div className="flex flex-row lg:flex-col gap-8 lg:gap-3 items-center lg:items-end">
+                    <div className="flex flex-row lg:flex-col gap-8 lg:gap-2 items-center lg:items-end">
                         <motion.a
                             href="https://www.instagram.com/clarrk__/"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-white hover:text-accent transition-colors"
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 20 }}
+                            className="text-white/60 hover:text-accent transition-colors"
+                            initial={{ opacity: 0, y: 15 }}
+                            animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 15 }}
                             transition={{ delay: 1.9, duration: 0.8, ease: revealEase }}
                         >
                             clarrk__
@@ -236,9 +236,9 @@ export const HeroSection = ({ isActive = true, onPlay }: HeroSectionProps) => {
                             href="https://www.instagram.com/tigreverde__/"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-white hover:text-accent transition-colors"
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 20 }}
+                            className="text-white/60 hover:text-accent transition-colors"
+                            initial={{ opacity: 0, y: 15 }}
+                            animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 15 }}
                             transition={{ delay: 2.0, duration: 0.8, ease: revealEase }}
                         >
                             tigreverde__
@@ -247,12 +247,12 @@ export const HeroSection = ({ isActive = true, onPlay }: HeroSectionProps) => {
 
                     {/* Location */}
                     <motion.div
-                        className="flex flex-row lg:flex-col gap-2 lg:gap-1 items-center lg:items-end text-white/50"
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 20 }}
+                        className="flex flex-row lg:flex-col gap-2 lg:gap-1 items-center lg:items-end text-white/30"
+                        initial={{ opacity: 0, y: 15 }}
+                        animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 15 }}
                         transition={{ delay: 2.1, duration: 0.8, ease: revealEase }}
                     >
-                        <span className="text-white">Buenos Aires,</span>
+                        <span className="text-white/60">Buenos Aires,</span>
                         <span>Argentina</span>
                     </motion.div>
                 </div>

@@ -79,7 +79,7 @@ export const DifferentialSection = ({ isActive = false }: DifferentialSectionPro
 
             <div className="container mx-auto px-6 relative z-10">
                 <motion.h2
-                    className="text-[15vw] lg:text-[12vw] font-black text-white mb-8 lg:mb-12 tracking-tighter leading-[0.8] uppercase"
+                    className="text-[12vw] lg:text-[8vw] font-black text-white mb-6 lg:mb-10 tracking-tighter leading-[0.8] uppercase"
                     initial={{ opacity: 0, y: 50 }}
                     animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 50 }}
                     transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
@@ -87,7 +87,7 @@ export const DifferentialSection = ({ isActive = false }: DifferentialSectionPro
                     SHOWS
                 </motion.h2>
 
-                <div className={`${isMobile ? 'flex overflow-x-auto snap-x snap-mandatory no-scrollbar -mx-6 px-6 gap-6 pb-4' : 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8'}`}>
+                <div className={`${isMobile ? 'flex overflow-x-auto snap-x snap-mandatory no-scrollbar -mx-6 px-6 gap-6 pb-4' : 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6'}`}>
                     {shows.map((show, index) => (
                         <div key={index} className={`${isMobile ? 'flex-shrink-0 w-[80vw] snap-center' : 'overflow-hidden'}`}>
                             <motion.div
