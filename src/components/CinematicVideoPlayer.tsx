@@ -165,7 +165,26 @@ export const CinematicVideoPlayer = ({ src, onClose }: CinematicVideoPlayerProps
             {isYouTube ? (
                 <div className="absolute inset-0 w-full h-full overflow-hidden bg-black flex items-center justify-center">
                     {/* Interaction Shield: Prevents YouTube from showing UI on hover/pause */}
-                    <div className="absolute inset-0 z-10 pointer-events-auto" onClick={togglePlay} />
+                    <div className="absolute inset-0 z-20 pointer-events-auto" onClick={togglePlay} />
+
+                    {/* Thumbnail Swipe: Covers the 'More Videos' shelf when paused */}
+                    <AnimatePresence>
+                        {!isPlaying && youtubeId && (
+                            <motion.div
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                exit={{ opacity: 0 }}
+                                className="absolute inset-0 z-10 overflow-hidden"
+                            >
+                                <motion.img
+                                    src={`https://img.youtube.com/vi/${youtubeId}/maxresdefault.jpg`}
+                                    alt="Pause state"
+                                    className="w-full h-full object-cover scale-[1.3] origin-center"
+                                />
+                                <div className="absolute inset-0 bg-black/40" />
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
 
                     {/* The YouTube Player: Scaled aggressively (1.3x) to crop out native UI while preserving composition */}
                     <div className="absolute w-[130vw] h-[130vh] pointer-events-none origin-center flex items-center justify-center">
