@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ArrowRight } from 'lucide-react';
-import { OpticLensImage } from './OpticLensImage';
 
 const navItems = [
     { name: 'HOME', id: 'hero' },
@@ -91,14 +90,25 @@ export const Navigation = ({ activeSection, onSectionChange }: NavigationProps) 
                                 {/* Background subtle gradient for depth */}
                                 <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-black/80 pointer-events-none" />
 
-                                <div className="relative w-[70%] aspect-[3/4] max-h-[80vh]">
-                                    <OpticLensImage
+                                <motion.div
+                                    className="relative w-[70%] aspect-[3/4] max-h-[80vh] overflow-hidden shadow-2xl group/img"
+                                    initial={{ opacity: 0, scale: 0.95 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+                                >
+                                    <motion.img
                                         src="/assets/foto perfil.jpg"
                                         alt="Menu Aesthetic"
-                                        intensity={0.3}
-                                        className="w-full h-full shadow-2xl"
+                                        className="w-full h-full object-cover transition-all duration-700"
+                                        style={{ filter: "saturate(0.6) brightness(0.9)" }}
+                                        whileHover={{
+                                            filter: "saturate(1.1) brightness(1)",
+                                            scale: 1.05
+                                        }}
                                     />
-                                </div>
+                                    {/* Subtle Overlay to match the theme */}
+                                    <div className="absolute inset-0 bg-black/10 group-hover/img:bg-transparent transition-colors duration-700" />
+                                </motion.div>
                             </div>
 
                             {/* Right Column: Navigation Links & Info */}

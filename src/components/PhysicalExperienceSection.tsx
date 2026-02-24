@@ -1,7 +1,6 @@
 import { motion } from 'framer-motion';
 import { Section } from './Section';
 import { VideoBackground } from './VideoBackground';
-import { OpticLensImage } from './OpticLensImage';
 
 interface PhysicalExperienceSectionProps {
     isActive?: boolean;
@@ -28,27 +27,37 @@ export const PhysicalExperienceSection = ({ isActive = false }: PhysicalExperien
                             initial={{ opacity: 0, x: -30 }}
                             animate={{ opacity: isActive ? 1 : 0, x: isActive ? 0 : -30 }}
                             transition={{ duration: 1, delay: 0.2, ease: revealEase }}
-                            className="w-full lg:w-[85%] aspect-[3/4] bg-zinc-900 overflow-visible"
+                            className="w-full lg:w-[85%] aspect-[3/4] bg-zinc-900 overflow-hidden shadow-2xl relative group/img"
                         >
-                            <OpticLensImage
+                            <motion.img
                                 src="/assets/HERNAN.png"
                                 alt="Hernán - Experience"
-                                intensity={0.4}
-                                className="w-full h-full shadow-2xl"
+                                className="w-full h-full object-cover transition-all duration-700"
+                                style={{ filter: "saturate(0.6) brightness(0.9)" }}
+                                whileHover={{
+                                    filter: "saturate(1.1) brightness(1)",
+                                    scale: 1.05
+                                }}
                             />
+                            <div className="absolute inset-0 bg-black/10 group-hover/img:bg-transparent transition-colors duration-700" />
                         </motion.div>
                         <motion.div
                             initial={{ opacity: 0, x: -30 }}
                             animate={{ opacity: isActive ? 1 : 0, x: isActive ? 0 : -30 }}
                             transition={{ duration: 1, delay: 0.4, ease: revealEase }}
-                            className="w-full lg:w-[85%] aspect-[3/4] bg-zinc-900 overflow-visible mb-8 lg:mb-0"
+                            className="w-full lg:w-[85%] aspect-[3/4] bg-zinc-900 overflow-hidden shadow-2xl relative group/img mb-8 lg:mb-0"
                         >
-                            <OpticLensImage
+                            <motion.img
                                 src="/assets/NICO.png"
                                 alt="Nico - Experience"
-                                intensity={0.4}
-                                className="w-full h-full shadow-2xl"
+                                className="w-full h-full object-cover transition-all duration-700"
+                                style={{ filter: "saturate(0.6) brightness(0.9)" }}
+                                whileHover={{
+                                    filter: "saturate(1.1) brightness(1)",
+                                    scale: 1.05
+                                }}
                             />
+                            <div className="absolute inset-0 bg-black/10 group-hover/img:bg-transparent transition-colors duration-700" />
                         </motion.div>
                     </div>
 
@@ -61,8 +70,8 @@ export const PhysicalExperienceSection = ({ isActive = false }: PhysicalExperien
                             className="space-y-8"
                         >
                             <div>
-                                <span className="text-[10px] uppercase tracking-[0.4em] text-accent font-bold mb-4 block">Manifesto / Vision</span>
-                                <h2 className="text-4xl md:text-5xl font-bold leading-[1.1] tracking-tight">
+                                <span className="text-[10px] uppercase tracking-[0.4em] text-accent font-bold mb-4 block">nuestro mundo</span>
+                                <h2 className="text-4xl md:text-5xl font-bold leading-[1.1] tracking-tight uppercase">
                                     EL MUNDO DE <span className="italic font-light text-accent">CLARK & TIGRE VERDE</span>
                                 </h2>
                             </div>
@@ -91,8 +100,7 @@ export const PhysicalExperienceSection = ({ isActive = false }: PhysicalExperien
                             animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 20 }}
                             transition={{ duration: 0.8, delay: 0.5, ease: revealEase }}
                         >
-                            <h3 className="text-[10px] uppercase tracking-[0.4em] text-zinc-500 font-bold mb-4">Digital Ecosystem</h3>
-                            <p className="text-sm md:text-base text-zinc-300 font-light leading-snug">
+                            <p className="text-sm md:text-base text-zinc-300 font-light leading-snug pt-4">
                                 Nuestra propuesta trasciende el escenario, habitando plataformas donde la música y la estética visual convergen para expandir el universo de Clark & Tigre Verde.
                             </p>
                         </motion.div>
@@ -103,7 +111,7 @@ export const PhysicalExperienceSection = ({ isActive = false }: PhysicalExperien
                             animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 20 }}
                             transition={{ duration: 0.8, delay: 0.6, ease: revealEase }}
                         >
-                            <h3 className="text-[10px] uppercase tracking-[0.4em] text-zinc-500 font-bold mb-6">Social Platforms</h3>
+                            <h3 className="text-[10px] uppercase tracking-[0.4em] text-zinc-500 font-bold mb-6">Redes Sociales</h3>
 
                             <div className="space-y-6">
                                 <div>
@@ -135,7 +143,7 @@ export const PhysicalExperienceSection = ({ isActive = false }: PhysicalExperien
                             animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 20 }}
                             transition={{ duration: 0.8, delay: 0.7, ease: revealEase }}
                         >
-                            <h3 className="text-[10px] uppercase tracking-[0.4em] text-zinc-500 font-bold mb-4">Direct Access</h3>
+                            <h3 className="text-[10px] uppercase tracking-[0.4em] text-zinc-500 font-bold mb-4">Contacto</h3>
                             <ul className="text-[11px] md:text-xs text-zinc-400 space-y-3 uppercase tracking-widest font-medium">
                                 <li>
                                     <a href="https://wa.me/5491167872149" target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors">Whatsapp / Contactar</a>

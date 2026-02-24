@@ -9,11 +9,78 @@ interface CinematicVideoPlayerProps {
 
 export const CinematicVideoPlayer = ({ src, onClose }: CinematicVideoPlayerProps) => {
     const videoRef = useRef<HTMLVideoElement>(null);
+    const playerRef = useRef<any>(null);
     const [isPlaying, setIsPlaying] = useState(true);
     const [currentTime, setCurrentTime] = useState(0);
     const [duration, setDuration] = useState(0);
     const [showControls, setShowControls] = useState(true);
     const controlsTimeoutRef = useRef<any>(null);
+    const [isPlayerReady, setIsPlayerReady] = useState(false);
+
+    const isYouTube = src.includes('youtube.com') || src.includes('youtu.be');
+    const youtubeId = isYouTube ? src.split('/').pop()?.split('?')[0] : null;
+
+    // Load YouTube API and Initialize Player
+    useEffect(() => {
+        if (!isYouTube) return;
+
+        const initPlayer = () => {
+            playerRef.current = new (window as any).YT.Player('youtube-player', {
+                videoId: youtubeId,
+                playerVars: {
+                    autoplay: 1,
+                    controls: 0,
+                    modestbranding: 1,
+                    rel: 0,
+                    showinfo: 0,
+                    mute: 0,
+                    iv_load_policy: 3,
+                    disablekb: 1,
+                    fs: 0,
+                    color: 'white',
+                },
+                events: {
+                    onReady: (event: any) => {
+                        setIsPlayerReady(true);
+                        setDuration(event.target.getDuration());
+                        event.target.playVideo();
+                    },
+                    onStateChange: (event: any) => {
+                        setIsPlaying(event.data === (window as any).YT.PlayerState.PLAYING);
+                    }
+                }
+            });
+        };
+
+        if (!(window as any).YT) {
+            const tag = document.createElement('script');
+            tag.src = "https://www.youtube.com/iframe_api";
+            const firstScriptTag = document.getElementsByTagName('script')[0];
+            firstScriptTag.parentNode?.insertBefore(tag, firstScriptTag);
+            (window as any).onYouTubeIframeAPIReady = initPlayer;
+        } else if ((window as any).YT.Player) {
+            initPlayer();
+        }
+
+        return () => {
+            if (playerRef.current) {
+                playerRef.current.destroy();
+            }
+        };
+    }, [isYouTube, youtubeId]);
+
+    // Sync Time for YouTube Player
+    useEffect(() => {
+        if (!isYouTube || !isPlayerReady) return;
+
+        const interval = setInterval(() => {
+            if (playerRef.current && playerRef.current.getCurrentTime) {
+                setCurrentTime(playerRef.current.getCurrentTime());
+            }
+        }, 500);
+
+        return () => clearInterval(interval);
+    }, [isYouTube, isPlayerReady]);
 
     // Format time to 0:00:00
     const formatTime = (time: number) => {
@@ -44,7 +111,13 @@ export const CinematicVideoPlayer = ({ src, onClose }: CinematicVideoPlayerProps
     };
 
     const togglePlay = () => {
-        if (videoRef.current) {
+        if (isYouTube) {
+            if (playerRef.current) {
+                if (isPlaying) playerRef.current.pauseVideo();
+                else playerRef.current.playVideo();
+                // State is handled by onStateChange event
+            }
+        } else if (videoRef.current) {
             if (isPlaying) videoRef.current.pause();
             else videoRef.current.play();
             setIsPlaying(!isPlaying);
@@ -64,11 +137,18 @@ export const CinematicVideoPlayer = ({ src, onClose }: CinematicVideoPlayerProps
     };
 
     const handleProgressClick = (e: React.MouseEvent<HTMLDivElement>) => {
-        if (videoRef.current) {
-            const bounds = e.currentTarget.getBoundingClientRect();
-            const x = e.clientX - bounds.left;
-            const percentage = x / bounds.width;
-            videoRef.current.currentTime = percentage * duration;
+        const bounds = e.currentTarget.getBoundingClientRect();
+        const x = e.clientX - bounds.left;
+        const percentage = x / bounds.width;
+        const targetTime = percentage * duration;
+
+        if (isYouTube) {
+            if (playerRef.current) {
+                playerRef.current.seekTo(targetTime, true);
+                setCurrentTime(targetTime);
+            }
+        } else if (videoRef.current) {
+            videoRef.current.currentTime = targetTime;
         }
     };
 
@@ -77,23 +157,35 @@ export const CinematicVideoPlayer = ({ src, onClose }: CinematicVideoPlayerProps
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] bg-black flex items-center justify-center overflow-hidden cursor-none"
+            className={`fixed inset-0 z-[100] bg-black flex items-center justify-center overflow-hidden cursor-none`}
             onMouseMove={handleMouseMove}
             style={{ cursor: showControls ? 'auto' : 'none' }}
         >
-            {/* Background Video */}
-            <video
-                ref={videoRef}
-                src={src}
-                className="w-full h-full object-cover"
-                autoPlay
-                playsInline
-                onTimeUpdate={handleTimeUpdate}
-                onLoadedMetadata={handleLoadedMetadata}
-                onClick={togglePlay}
-            />
+            {/* Background Video Content */}
+            {isYouTube ? (
+                <div className="absolute inset-0 w-full h-full overflow-hidden bg-black flex items-center justify-center">
+                    {/* Interaction Shield: Prevents YouTube from showing UI on hover/pause */}
+                    <div className="absolute inset-0 z-10 pointer-events-auto" onClick={togglePlay} />
 
-            {/* Close Button */}
+                    {/* The YouTube Player: Scaled aggressively (1.3x) to crop out native UI while preserving composition */}
+                    <div className="absolute w-[130vw] h-[130vh] pointer-events-none origin-center flex items-center justify-center">
+                        <div id="youtube-player" className="w-full h-full" />
+                    </div>
+                </div>
+            ) : (
+                <video
+                    ref={videoRef}
+                    src={src}
+                    className="w-full h-full object-cover"
+                    autoPlay
+                    playsInline
+                    onTimeUpdate={handleTimeUpdate}
+                    onLoadedMetadata={handleLoadedMetadata}
+                    onClick={togglePlay}
+                />
+            )}
+
+            {/* Close Button - Always visible on user activity */}
             <AnimatePresence>
                 {showControls && (
                     <motion.button
@@ -101,22 +193,22 @@ export const CinematicVideoPlayer = ({ src, onClose }: CinematicVideoPlayerProps
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -20 }}
                         onClick={onClose}
-                        className="absolute top-8 right-8 text-accent/60 hover:text-accent transition-colors z-[110] flex items-center gap-2 group"
+                        className="absolute top-8 right-8 text-accent/60 hover:text-accent transition-colors z-[130] flex items-center gap-2 group bg-black/20 backdrop-blur-md p-3 px-6 rounded-full border border-white/10"
                     >
                         <span className="text-[10px] uppercase tracking-widest font-bold">Cerrar</span>
-                        <X size={32} className="text-accent" />
+                        <X size={24} className="text-accent" />
                     </motion.button>
                 )}
             </AnimatePresence>
 
-            {/* Custom Controls (Based on Reference UI) */}
+            {/* Custom Controls (Always visible/Functional now) */}
             <AnimatePresence>
                 {showControls && (
                     <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        className="absolute inset-0 z-[110] flex flex-col justify-center p-8 md:p-32 pointer-events-none"
+                        className="absolute inset-0 z-[125] flex flex-col justify-center p-8 md:p-32 pointer-events-none"
                     >
                         <div className="w-full flex items-center gap-12 pointer-events-auto">
                             {/* Play/Pause & Time Display */}
@@ -145,12 +237,12 @@ export const CinematicVideoPlayer = ({ src, onClose }: CinematicVideoPlayerProps
                                     {/* Progress Fill */}
                                     <motion.div
                                         className="absolute top-0 left-0 h-full bg-white/60 group-hover:bg-accent transition-colors"
-                                        style={{ width: `${(currentTime / duration) * 100}%` }}
+                                        style={{ width: `${(currentTime / Math.max(duration, 1)) * 100}%` }}
                                     />
                                     {/* Dot Indicator */}
                                     <motion.div
                                         className="absolute top-1/2 w-1.5 h-1.5 bg-white rounded-full -translate-y-1/2 -translate-x-1/2"
-                                        style={{ left: `${(currentTime / duration) * 100}%` }}
+                                        style={{ left: `${(currentTime / Math.max(duration, 1)) * 100}%` }}
                                     />
 
                                     {/* Interaction Area (Hitbox) */}

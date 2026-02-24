@@ -30,7 +30,7 @@ function App() {
       <AnimatePresence>
         {isPlayingVideo && (
           <CinematicVideoPlayer
-            src="/assets/experience-loop.mp4"
+            src="https://www.youtube.com/embed/6mmNrXqCtag"
             onClose={() => setIsPlayingVideo(false)}
           />
         )}
