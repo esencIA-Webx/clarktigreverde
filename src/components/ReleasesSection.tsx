@@ -16,7 +16,7 @@ const releases: Release[] = [
     {
         title: "GRAN MURALLA",
         subtitle: "Clark & Tigre Verde",
-        cover: "/assets/gran-muralla.png",
+        cover: "/assets/gran-muralla.webp",
         link: "https://www.youtube.com/watch?v=BvBN8x_SY8M",
         aspect: "4/3",
         width: "38%",
@@ -25,7 +25,7 @@ const releases: Release[] = [
     {
         title: "AZUL PROFUNDO",
         subtitle: "Clark & Tigre Verde",
-        cover: "/assets/azul-profundo.jpg",
+        cover: "/assets/azul-profundo.webp",
         link: "https://www.youtube.com/watch?v=6mmNrXqCtag",
         aspect: "3/4",
         width: "22%",

@@ -6,22 +6,22 @@ const shows = [
     {
         title: "LIVE EXPERIENCE 01",
         year: "2024",
-        image: "/assets/SHOW 1.png"
+        image: "/assets/SHOW 1.webp"
     },
     {
         title: "NEÓN TOUR",
         year: "2024",
-        image: "/assets/SHOW 2.png"
+        image: "/assets/SHOW 2.webp"
     },
     {
         title: "VOLTAJE LIVE",
         year: "2023",
-        image: "/assets/SHOW 3.png"
+        image: "/assets/SHOW 3.webp"
     },
     {
         title: "SISTEMA SESSION",
         year: "2023",
-        image: "/assets/SHOW 4.png"
+        image: "/assets/SHOW 4.webp"
     }
 ];
 
@@ -59,7 +59,7 @@ export const DifferentialSection = ({ isActive = false }: DifferentialSectionPro
 
                     <motion.div className="w-full h-full will-change-transform">
                         <motion.img
-                            src="/assets/FONDO SHOWS NEW.png"
+                            src="/assets/FONDO SHOWS NEW.webp"
                             alt="Shows Background"
                             className="w-full h-full object-cover"
                             initial={{ scale: 1.1, filter: "blur(10px)" }}

@@ -39,7 +39,7 @@ export const PhysicalExperienceSection = ({ isActive = false }: PhysicalExperien
                             className="flex-1 lg:w-4/5 aspect-[3/4] bg-zinc-900 overflow-hidden shadow-2xl relative group/img"
                         >
                             <motion.img
-                                src="/assets/HERNAN.png"
+                                src="/assets/HERNAN.webp"
                                 alt="Hernán - Experience"
                                 className="w-full h-full object-cover transition-all duration-700"
                                 loading="lazy"
@@ -58,7 +58,7 @@ export const PhysicalExperienceSection = ({ isActive = false }: PhysicalExperien
                             className="flex-1 lg:w-4/5 aspect-[3/4] bg-zinc-900 overflow-hidden shadow-2xl relative group/img"
                         >
                             <motion.img
-                                src="/assets/NICO.png"
+                                src="/assets/NICO.webp"
                                 alt="Nico - Experience"
                                 className="w-full h-full object-cover transition-all duration-700"
                                 loading="lazy"
@@ -83,7 +83,9 @@ export const PhysicalExperienceSection = ({ isActive = false }: PhysicalExperien
                             <div>
                                 <span className="text-[9px] uppercase tracking-[0.4em] text-accent font-bold mb-3 block">nuestro mundo</span>
                                 <h2 className="text-2xl md:text-3xl lg:text-4xl font-black leading-[1.1] tracking-tight uppercase">
-                                    EL MUNDO DE <span className="text-accent italic font-light block lg:inline-block">CLARK & TIGRE VERDE</span>
+                                    EL MUNDO DE <span className="italic font-light block lg:inline-block">
+                                        <span className="text-blue-500">CLARK</span> <span className="text-white">&</span> <span className="text-accent">TIGRE VERDE</span>
+                                    </span>
                                 </h2>
                             </div>
 
@@ -127,7 +129,7 @@ export const PhysicalExperienceSection = ({ isActive = false }: PhysicalExperien
                                     <span className="text-[8px] uppercase tracking-widest text-zinc-600 block mb-2 font-bold">Instagram</span>
                                     <ul className="text-[10px] text-zinc-400 space-y-2 uppercase tracking-widest font-medium">
                                         <li>
-                                            <a href="https://www.instagram.com/clarrk__/" target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors">clarrk__</a>
+                                            <a href="https://www.instagram.com/clarrk__/" target="_blank" rel="noopener noreferrer" className="hover:text-blue-500 transition-colors">clarrk__</a>
                                         </li>
                                         <li>
                                             <a href="https://www.instagram.com/tigreverde__/" target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors">tigreverde__</a>

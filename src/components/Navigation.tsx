@@ -95,7 +95,7 @@ export const Navigation = ({ activeSection, onSectionChange }: NavigationProps) 
                                     transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
                                 >
                                     <motion.img
-                                        src="/assets/foto perfil.jpg"
+                                        src="/assets/foto perfil.webp"
                                         alt="Menu Aesthetic"
                                         className="w-full h-full object-cover transition-all duration-700"
                                         style={{ filter: "saturate(0.6) brightness(0.9)" }}
@@ -132,7 +132,9 @@ export const Navigation = ({ activeSection, onSectionChange }: NavigationProps) 
                                                     onSectionChange(item.id);
                                                     setIsOpen(false);
                                                 }}
-                                                className={`block text-[11vw] xs:text-5xl md:text-6xl lg:text-6xl font-black tracking-tighter uppercase leading-none transition-colors ${activeSection === item.id ? 'text-accent' : 'text-white hover:text-white/50'
+                                                className={`block text-[11vw] xs:text-5xl md:text-6xl lg:text-6xl font-black tracking-tighter uppercase leading-none transition-colors ${activeSection === item.id
+                                                    ? 'text-accent'
+                                                    : `text-white ${i % 2 === 0 ? 'hover:text-blue-500' : 'hover:text-accent'}`
                                                     }`}
                                                 initial={{ y: "100%" }}
                                                 animate={{ y: "0%" }}
@@ -155,7 +157,7 @@ export const Navigation = ({ activeSection, onSectionChange }: NavigationProps) 
                                     <div className="flex flex-col gap-4 items-center lg:items-start">
                                         <span className="text-white mb-2">Follow</span>
                                         <div className="flex flex-row lg:flex-col gap-6 lg:gap-4 justify-center">
-                                            <a href="https://www.instagram.com/clarrk__/" target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors">clarrk__</a>
+                                            <a href="https://www.instagram.com/clarrk__/" target="_blank" rel="noopener noreferrer" className="hover:text-blue-500 transition-colors">clarrk__</a>
                                             <a href="https://www.instagram.com/tigreverde__/" target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors">tigreverde__</a>
                                             <a href="https://www.youtube.com/@ClarkTigreVerde" target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors">youtube</a>
                                         </div>

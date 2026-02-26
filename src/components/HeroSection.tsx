@@ -9,9 +9,12 @@ interface MaskedRevealLineProps {
     delay?: number;
     className?: string;
     animate?: any;
+    hoverColor?: string; // New prop for "painting" effect
 }
 
-const MaskedRevealLine = ({ text, delay = 0, className, animate = "visible" }: MaskedRevealLineProps) => {
+const MaskedRevealLine = ({ text, delay = 0, className, animate = "visible", hoverColor }: MaskedRevealLineProps) => {
+    const [isHovered, setIsHovered] = useState(false);
+
     // Character Variants
     const charVariants = {
         hidden: { y: "110%", opacity: 0 },
@@ -27,7 +30,11 @@ const MaskedRevealLine = ({ text, delay = 0, className, animate = "visible" }: M
     };
 
     return (
-        <span className="overflow-hidden relative inline-flex"> {/* Mask */}
+        <span
+            className="overflow-hidden relative inline-flex pointer-events-auto cursor-default"
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+        > {/* Mask */}
             {/* Sr-only text for accessibility */}
             <span className="sr-only">{text}</span>
 
@@ -41,7 +48,10 @@ const MaskedRevealLine = ({ text, delay = 0, className, animate = "visible" }: M
                 {text.split('').map((char, index) => (
                     <motion.span
                         key={`${char}-${index}`}
-                        className={`inline-block whitespace-pre ${className}`}
+                        className={`inline-block whitespace-pre transition-colors duration-500 ease-out ${className} ${isHovered && hoverColor ? hoverColor : ''}`}
+                        style={{
+                            transitionDelay: isHovered ? `${index * 25}ms` : '0ms'
+                        }}
                         custom={index}
                         variants={charVariants}
                     >
@@ -95,7 +105,7 @@ export const HeroSection = ({ isActive = true, onPlay }: HeroSectionProps) => {
                         className="w-full h-full will-change-transform"
                     >
                         <motion.img
-                            src="/assets/DSC04120 - Nicolas Cordoba.png"
+                            src="/assets/DSC04120 - Nicolas Cordoba.webp"
                             alt="Clark & Tigre Verde Portrait"
                             className="w-full h-full object-cover"
                             loading="eager"
@@ -134,6 +144,7 @@ export const HeroSection = ({ isActive = true, onPlay }: HeroSectionProps) => {
                             text="CLARK"
                             delay={0.6}
                             animate={isActive ? "visible" : "hidden"}
+                            hoverColor="text-blue-500"
                             className="text-[16vw] lg:text-[10vw] leading-[0.8] font-black tracking-tighter uppercase select-none will-change-transform"
                         />
                     </div>
@@ -154,12 +165,14 @@ export const HeroSection = ({ isActive = true, onPlay }: HeroSectionProps) => {
                             text="TIGRE"
                             delay={1.1}
                             animate={isActive ? "visible" : "hidden"}
+                            hoverColor="text-accent"
                             className="text-[16vw] lg:text-[10vw] leading-[0.8] font-black tracking-tighter uppercase select-none will-change-transform"
                         />
                         <MaskedRevealLine
                             text="VERDE"
                             delay={1.4}
                             animate={isActive ? "visible" : "hidden"}
+                            hoverColor="text-accent"
                             className="text-[16vw] lg:text-[10vw] leading-[0.8] font-black tracking-tighter uppercase select-none will-change-transform"
                         />
                     </div>
@@ -225,7 +238,7 @@ export const HeroSection = ({ isActive = true, onPlay }: HeroSectionProps) => {
                             href="https://www.instagram.com/clarrk__/"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-white/60 hover:text-accent transition-colors"
+                            className="text-white/60 hover:text-blue-500 transition-colors"
                             initial={{ opacity: 0, y: 15 }}
                             animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 15 }}
                             transition={{ delay: 1.9, duration: 0.8, ease: revealEase }}
