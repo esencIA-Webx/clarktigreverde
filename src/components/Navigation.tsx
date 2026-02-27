@@ -132,9 +132,9 @@ export const Navigation = ({ activeSection, onSectionChange }: NavigationProps) 
                                                     onSectionChange(item.id);
                                                     setIsOpen(false);
                                                 }}
-                                                className={`block text-[11vw] xs:text-5xl md:text-6xl lg:text-6xl font-black tracking-tighter uppercase leading-none transition-colors ${activeSection === item.id
-                                                    ? 'text-accent'
-                                                    : `text-white ${i % 2 === 0 ? 'hover:text-blue-500' : 'hover:text-accent'}`
+                                                className={`block text-[11vw] xs:text-5xl md:text-6xl lg:text-6xl font-black tracking-tighter uppercase leading-none transition-colors ${i % 2 === 0
+                                                    ? (activeSection === item.id ? 'text-blue-500' : 'text-white hover:text-blue-500')
+                                                    : (activeSection === item.id ? 'text-accent' : 'text-white hover:text-accent')
                                                     }`}
                                                 initial={{ y: "100%" }}
                                                 animate={{ y: "0%" }}
